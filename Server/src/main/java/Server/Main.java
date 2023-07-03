@@ -5,6 +5,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import static com.mongodb.client.model.Filters.*;
+import com.google.gson.Gson;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,16 +23,28 @@ public class Main {
 
         //mongo init
         MongoClient mongoClient = new MongoClient("localhost", 27017);
-        MongoDatabase db = mongoClient.getDatabase("posts");
-        MongoCollection<Document> myCollection = db.getCollection("data");
-        MongoCollection<Document> usersCollection = db.getCollection("users");
+        MongoDatabase db = mongoClient.getDatabase("recipe-app");
+        MongoCollection<Document> postCollection = db.getCollection("posts");
+        MongoCollection<Document> userCollection = db.getCollection("users");
 
         System.out.println("connected to db");
 
+        /// TODO add authentication to client and this api to avoid waisting computation power
         post("/api/login", (req, res)-> {
-            System.out.println("LOLZZZZ");
-            return "login successful";
+            Gson gson = new Gson();
+            Map<String, Object> requestData = gson.fromJson(req.body(), Map.class);
+            String username = (String) requestData.get("username");
+            String password = (String) requestData.get("password");
+            System.out.println("attempting");
+            Document userDocument = userCollection.find(and(eq("username", username), eq("password", password))).first();
+            if(userDocument != null) {
+                System.out.println("LOL");
+                return "login successful";
+            }
+            System.out.println("Couldnt find or wrong username/password");
+            return "login failed";
         });
+
 
         post("/api/postListing",(req,res)-> {
             System.out.println("Post running");
