@@ -36,13 +36,14 @@ public class Main {
             String username = (String) requestData.get("username");
             String password = (String) requestData.get("password");
             System.out.println("attempting");
+            res.type("application/json");
             Document userDocument = userCollection.find(and(eq("username", username), eq("password", password))).first();
             if(userDocument != null) {
                 System.out.println("LOL");
-                return "login successful";
+                return "{\"loggedIn\": true}";
             }
             System.out.println("Couldnt find or wrong username/password");
-            return "login failed";
+            return "{\"loggedIn\": false}";
         });
 
 

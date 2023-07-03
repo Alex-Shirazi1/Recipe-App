@@ -23,6 +23,7 @@ const LoginPage = () => {
 
         if (loggedIn) {
             console.log("loggedin")
+
         } else {
           // Handle failed login
           alert('Access Denied');
