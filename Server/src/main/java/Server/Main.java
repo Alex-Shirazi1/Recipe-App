@@ -27,6 +27,7 @@ public class Main {
         MongoDatabase db = mongoClient.getDatabase("recipe-app");
         MongoCollection<Document> postCollection = db.getCollection("posts");
         MongoCollection<Document> userCollection = db.getCollection("users");
+        MongoCollection<Document> userRequestCollection = db.getCollection("usersRequest");
 
         System.out.println("connected to db");
 
@@ -53,14 +54,11 @@ public class Main {
                 res.status(401);
                 return "{\"message\": \"Username and/or password invalid\"}";
             }
-            Document newUser = new Document().append("username", username).append("password", password);
-            userCollection.insertOne(newUser);
-
-            Session session = req.session(true);
-            session.attribute("username", username);
+            Document registrationRequest = new Document().append("username", username).append("password", password).append("approvedState", false);
+            userRequestCollection.insertOne(registrationRequest);
 
             res.status(201);
-            return "{\"message\": \"User created successfully\"}";
+            return "{\"message\": \"User request created successfully and has been send for review\"}";
         });
 
         post("/api/login", (req, res)-> {
@@ -70,12 +68,19 @@ public class Main {
             String password = (String) requestData.get("password");
             res.type("application/json");
             Document userDocument = userCollection.find(and(eq("username", username), eq("password", password))).first();
+
             if(userDocument != null) {
                 Session session = req.session(true);
                 session.attribute("username", username);
                 return "{\"loggedIn\": true}";
+            } else {
+                Document registrationRequest = userRequestCollection.find(and(eq("username", username), eq("password", password))).first();
+                if (registrationRequest != null) {
+                    System.out.println("Account Not Approved");
+                    return "{\"loggedIn\": false}";
+                }
             }
-            System.out.println("Couldnt find or wrong username/password");
+            System.out.println("Couldnt find account or wrong username/password");
             return "{\"loggedIn\": false}";
         });
 
