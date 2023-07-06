@@ -8,6 +8,7 @@ import org.bson.Document;
 import static com.mongodb.client.model.Filters.*;
 import com.google.gson.Gson;
 import java.util.Map;
+import spark.Session;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,7 +29,7 @@ public class Main {
         MongoCollection<Document> userCollection = db.getCollection("users");
 
         System.out.println("connected to db");
-
+        
         /// TODO add authentication to client and this api to avoid waisting computation power
         post("/api/login", (req, res)-> {
             Gson gson = new Gson();
@@ -40,6 +41,7 @@ public class Main {
             Document userDocument = userCollection.find(and(eq("username", username), eq("password", password))).first();
             if(userDocument != null) {
                 System.out.println("LOL");
+                Session session = req.session(true);
                 return "{\"loggedIn\": true}";
             }
             System.out.println("Couldnt find or wrong username/password");

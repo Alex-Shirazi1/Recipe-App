@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../UserContext';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
+  const [usernameInput, setUsernameInput] = useState('');
   const [password, setPassword] = useState('');
+  const { setUsername } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    setUsernameInput(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -16,21 +20,17 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:1235/api/login', { username, password })
+    axios.post('http://localhost:1235/api/login', { username: usernameInput, password })
       .then((response) => {
-        // Handle the response
         const { loggedIn } = response.data;
 
         if (loggedIn) {
-            console.log("loggedin")
-
-        } else {
-          // Handle failed login
+            setUsername(usernameInput);
+            navigate('/home');
           alert('Access Denied');
         }
       })
       .catch((error) => {
-        // Handle the error
         console.error('Login failed:', error);
         alert('An error occurred during login');
       });
@@ -42,7 +42,7 @@ const LoginPage = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Username:
-          <input type="text" value={username} onChange={handleUsernameChange} />
+          <input type="text" value={usernameInput} onChange={handleUsernameChange} />
         </label>
         <br />
         <label>
