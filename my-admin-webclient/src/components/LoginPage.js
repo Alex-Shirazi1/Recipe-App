@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
+import '../App.css';
 
 const LoginPage = () => {
   const [usernameInput, setUsernameInput] = useState('');
