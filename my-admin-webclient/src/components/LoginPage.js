@@ -7,7 +7,7 @@ import '../App.css';
 const LoginPage = () => {
   const [usernameInput, setUsernameInput] = useState('');
   const [password, setPassword] = useState('');
-  const { setUsername } = useContext(UserContext);
+  const { setUsername, setLoggedIn } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
@@ -21,16 +21,19 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:1235/api/login', { username: usernameInput, password })
-      .then((response) => {
-        const { loggedIn } = response.data;
+axios.post('http://localhost:1235/api/login', { username: usernameInput, password })
+.then((response) => {
 
-        if (loggedIn) {
-            setUsername(usernameInput);
-            navigate('/home');
-          alert('Access Denied');
-        }
-      })
+  const { loggedIn } = response.data;
+
+  if (loggedIn) {
+    setUsername(usernameInput);
+    setLoggedIn(true);
+    navigate('/'); 
+  } else {
+    alert('Access Denied');
+  }
+})
       .catch((error) => {
         console.error('Login failed:', error);
         alert('An error occurred during login');

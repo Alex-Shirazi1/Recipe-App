@@ -29,33 +29,43 @@ public class Main {
         MongoCollection<Document> userCollection = db.getCollection("users");
 
         System.out.println("connected to db");
-        
+
         /// TODO add authentication to client and this api to avoid waisting computation power
         post("/api/login", (req, res)-> {
             Gson gson = new Gson();
             Map<String, Object> requestData = gson.fromJson(req.body(), Map.class);
             String username = (String) requestData.get("username");
             String password = (String) requestData.get("password");
-            System.out.println("attempting");
             res.type("application/json");
             Document userDocument = userCollection.find(and(eq("username", username), eq("password", password))).first();
             if(userDocument != null) {
-                System.out.println("LOL");
                 Session session = req.session(true);
+                session.attribute("username", username);
                 return "{\"loggedIn\": true}";
             }
             System.out.println("Couldnt find or wrong username/password");
             return "{\"loggedIn\": false}";
         });
 
+        get("/api/session", (req, res) -> {
+            res.type("application/json");
+            Session session = req.session(true);
 
-        post("/api/postListing",(req,res)-> {
-            System.out.println("Post running");
-            System.out.println(req.body());
-            //make object to transfer json data!
+            if(session.attribute("username") != null) {
+                return "{\"loggedIn\": true, \"username\": \"" + session.attribute("username") + "\"}";
+            }
 
-            return "Post successfully created!";
+            return "{\"loggedIn\": false}";
         });
+
+        get("/api/logout", (req, res)-> {
+            Session session = req.session(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            return "{\"loggedOut\": true}";
+        });
+
 
     }
 
