@@ -30,7 +30,39 @@ public class Main {
 
         System.out.println("connected to db");
 
-        /// TODO add authentication to client and this api to avoid waisting computation power
+        post("/api/register", (req, res) -> {
+            Gson gson = new Gson();
+            Map<String, Object> requestData = gson.fromJson(req.body(), Map.class);
+
+            String username = (String) requestData.get("username");
+            String password = (String) requestData.get("password");
+
+            // Check if the user already exists
+            Document existingUser = userCollection.find(eq("username", username)).first();
+            if (existingUser != null) {
+                res.status(400);
+                return "{\"message\": \"Username already exists\"}";
+            }
+
+            // Credentials Validation
+            if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+                res.status(400);
+                return "{\"message\": \"Username and password must be provided\"}";
+            }
+            if(username.length()<4 || username.length() > 20 || password.length()<4) {
+                res.status(401);
+                return "{\"message\": \"Username and/or password invalid\"}";
+            }
+            Document newUser = new Document().append("username", username).append("password", password);
+            userCollection.insertOne(newUser);
+
+            Session session = req.session(true);
+            session.attribute("username", username);
+
+            res.status(201);
+            return "{\"message\": \"User created successfully\"}";
+        });
+
         post("/api/login", (req, res)-> {
             Gson gson = new Gson();
             Map<String, Object> requestData = gson.fromJson(req.body(), Map.class);

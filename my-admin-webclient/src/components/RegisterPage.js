@@ -3,7 +3,6 @@ import axios from 'axios';
 import '../App.css';
 
 const RegisterPage = () => {
-  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -19,7 +18,6 @@ const RegisterPage = () => {
 
     try {
       await axios.post('http://localhost:1235/api/register', {
-        email,
         username,
         password,
       });
@@ -34,8 +32,6 @@ const RegisterPage = () => {
       <h2>Register</h2>
       <form onSubmit={handleRegister}>
         <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
-        <br />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <br />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <br />
