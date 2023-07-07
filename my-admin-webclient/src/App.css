@@ -53,9 +53,9 @@ nav {
   width: 100%;
   background-color: #24292e;
   display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  justify-content: space-between; /* Updated to distribute space evenly */
+  align-items: center; /* Align vertically */
+  padding: 20px; /* Added padding */
 }
 
 nav a {
@@ -131,4 +131,45 @@ form button {
 
 form button:hover {
   background-color: #2188ff;
+}
+
+.notifications {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px; /* Added right margin */
+}
+
+Copy code
+.bell-icon {
+  cursor: pointer;
+  padding: 10px; /* padding around the icon, you can adjust as per your needs */
+  font-size: 24px; /* size of the icon, you can adjust as per your needs */
+}
+
+.notification-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.notifications-list {
+  display: none;
+  position: absolute;
+  right: 0; /* Make dropdown appear on the right */
+  width: 300px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Ensure dropdown is above other content */
+}
+
+.notifications:hover .notifications-list {
+  display: block;
 }

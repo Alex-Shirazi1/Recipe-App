@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react';
-import axios from 'axios';
 import { UserContext } from '../UserContext';
 import '../App.css';
+import api from '../api';
 
 const HomePage = () => {
   const { username, setUsername } = useContext(UserContext);
 
   useEffect(() => {
-    axios.get('http://localhost:1235/api/session')
+    api.get('/api/session')
     .then((response) => {
       const { loggedIn, username } = response.data;
 

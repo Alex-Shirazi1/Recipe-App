@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 import '../App.css';
+import api from '../api';
 
 const LoginPage = () => {
   const [usernameInput, setUsernameInput] = useState('');
@@ -22,7 +22,7 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:1235/api/login', { username: usernameInput, password })
+    api.post('/api/login', { username: usernameInput, password })
       .then((response) => {
         const { loggedIn } = response.data;
 
