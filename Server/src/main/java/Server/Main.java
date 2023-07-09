@@ -23,7 +23,7 @@ public class Main {
 
         before((req, res) -> {
             res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-            res.header("Access-Control-Allow-Methods", "GET,POST");
+            res.header("Access-Control-Allow-Methods", "GET,POST,DELETE");
             res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
             res.header("Access-Control-Allow-Credentials", "true");
         });
@@ -81,7 +81,8 @@ public class Main {
                     // If there's no document for the user, create a new one
                     notifiedUserNotifications = new Document()
                             .append("username", notifiedUsername)
-                            .append("notifications", Arrays.asList(notification));
+                            .append("notifications", Arrays.asList(notification))
+                            .append("requestedUsername", username);
                     notificationsCollection.insertOne(notifiedUserNotifications);
                 } else {
                     // If there's already a document for the user, update it by adding the new notification
@@ -162,7 +163,6 @@ public class Main {
             if (userRequest != null) {
                 userRequestCollection.deleteOne(userRequest);
             } else {
-                System.out.println("debug 400");
                 res.status(400);
                 return "{\"message\": \"No such user request\"}";
             }
@@ -193,6 +193,14 @@ public class Main {
             res.status(200);
             return "{\"message\": \"User request deleted successfully\"}";
         });
+
+        delete("/api/notifications/:username", (req, res) -> {
+            String username = req.params("username");
+            notificationsCollection.deleteMany(eq("requestedUsername", username));
+            res.status(200);
+            return "{\"message\": \"Notifications deleted\"}";
+        });
+
 
         get("/api/logout", (req, res)-> {
             Session session = req.session(false);

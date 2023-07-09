@@ -32,14 +32,19 @@ const Notifications = () => {
   const handleApprove = (userRequest) => {
     console.log(JSON.stringify(userRequest))
     api.post('/api/user', userRequest)
+    .then(() => 
+     api.delete(`/api/notifications/${userRequest.username}`))
+    .then(() => fetchNotifications())
     .catch(error => console.error('Approval failed:', error));
   }
 
-  const handleDisapprove = (userRequest) => {
+const handleDisapprove = (userRequest) => {
     api.post('/api/userDecline', userRequest) 
+    .then(() => api.delete(`/api/notifications/${userRequest.username}`))
     .then(() => fetchNotifications())
     .catch(error => console.error('Disapproval failed:', error));
   }
+
 
   return (
     <div className="notifications">
@@ -49,7 +54,7 @@ const Notifications = () => {
         <div className="notifications-list">
           {notifications.map((notification, index) => (
             <div className="notification-item" key={index}>
-              {notification.user} has requested for a new registration
+              {notification.username} has requested for a new registration
               <button onClick={() => handleApprove(notification)}>✅</button>
               <button onClick={() => handleDisapprove(notification)}>❌</button>
             </div>
