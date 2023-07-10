@@ -4,6 +4,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import org.bson.Document;
 
 public class EmailService {
     private String host;
@@ -12,13 +13,11 @@ public class EmailService {
     private String password;
 
 
-    public EmailService() {
+    public EmailService(Document document) {
         this.host = "smtp.mail.yahoo.com";
         this.port = "587";
-        this.username = "alexredjaian@yahoo.com";
-        this.password = "bwjssnwubltfkucx";
-
-
+        this.username = document.getString("email");
+        this.password = document.getString("password");
     }
 
     public void sendEmail(String to, String subject, String body) throws MessagingException {

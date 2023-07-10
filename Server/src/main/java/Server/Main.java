@@ -39,6 +39,7 @@ public class Main {
         MongoCollection<Document> userCollection = db.getCollection("users");
         MongoCollection<Document> userRequestCollection = db.getCollection("usersRequest");
         MongoCollection<Document> notificationsCollection = db.getCollection("notificationsCollection");
+        MongoCollection<Document> service = db.getCollection("serviceCollection");
 
         System.out.println("connected to db");
 
@@ -94,7 +95,8 @@ public class Main {
             });
             //Email Logic
             try {
-                EmailService emailService = new EmailService();
+                Document credentials = service.find(eq("service", "emailService")).first();
+                EmailService emailService = new EmailService(credentials);
                 emailService.sendEmail(email,"Pending Approval. ",
                         "Hello " + username +  ",\n" +
                                 "Your request for creating an account is in review.\n" +
@@ -191,7 +193,8 @@ public class Main {
             userCollection.insertOne(user);
             //Email Logic
             try {
-                EmailService emailService = new EmailService();
+                Document credentials = service.find(eq("service", "emailService")).first();
+                EmailService emailService = new EmailService(credentials);
                 emailService.sendEmail(email,"Approved 🤙",
                         "Hello " + username +  ",\n" +
                                 "Congratulations! You have been approved.\n" +
@@ -217,7 +220,8 @@ public class Main {
                 String email = userRequest.getString("email");
                 //Email Logic
                 try {
-                    EmailService emailService = new EmailService();
+                    Document credentials = service.find(eq("service", "emailService")).first();
+                    EmailService emailService = new EmailService(credentials);
                     emailService.sendEmail(email,"Rejected 😢",
                             "Hello " + username +  ",\n" +
                                     "Unfortunately your account could not be approved at this time.\n" +
