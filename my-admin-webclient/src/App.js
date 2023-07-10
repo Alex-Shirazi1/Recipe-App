@@ -6,6 +6,7 @@ import LogoutPage from './components/LogoutPage';
 import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
 import Notifications from './components/Notifications';
+import CreatePost from './components/CreatePost';
 
 const App = () => {
   const [username, setUsername] = useState(null);
@@ -17,19 +18,23 @@ const App = () => {
         <div>
           <nav>
             <Link to="/">Home</Link>
-            <Link to="/register">Register</Link>
-           {loggedIn ? (
+            {loggedIn ? (
               <>
+                <Link to="/create">Create Post</Link>
                 <Link to="/logout">Logout</Link>
                 <Notifications />
               </>
             ) : (
-              <Link to="/login">Login</Link>
+              <>
+                <Link to="/register">Register</Link>
+                <Link to="/login">Login</Link>
+              </>
             )}
           </nav>
 
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/create" element={<CreatePost />} />
             <Route path ="/register" element={<RegisterPage />}/>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/logout" element={<LogoutPage />} />

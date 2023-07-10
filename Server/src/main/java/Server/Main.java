@@ -43,6 +43,24 @@ public class Main {
 
         System.out.println("connected to db");
 
+        post("/api/createPost", (req, res) -> {
+            Session session = req.session(false);
+            if (session == null) {
+                res.status(401);
+                return "User is not logged in";
+            }
+
+            String username = session.attribute("username");
+            String content = req.queryParams("content");
+
+            Document newPost = new Document().append("username", username).append("content", content);
+
+            postCollection.insertOne(newPost);
+
+            return "Post created";
+        });
+
+
         post("/api/register", (req, res) -> {
             Gson gson = new Gson();
             Map<String, Object> requestData = gson.fromJson(req.body(), Map.class);
