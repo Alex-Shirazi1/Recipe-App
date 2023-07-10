@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import spark.Session;
 
+import javax.mail.MessagingException;
+
 public class Main {
     public static void main(String[] args) {
         port(1235);
@@ -45,6 +47,7 @@ public class Main {
             Map<String, Object> requestData = gson.fromJson(req.body(), Map.class);
 
             String username = (String) requestData.get("username");
+            String email = (String) requestData.get("email");
             String password = (String) requestData.get("password");
 
             // Check if the user already exists
@@ -55,15 +58,15 @@ public class Main {
             }
 
             // Credentials Validation
-            if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            if (username == null || username.isEmpty() || password == null || password.isEmpty() || email == null || email.isEmpty()) {
                 res.status(400);
-                return "{\"message\": \"Username and password must be provided\"}";
+                return "{\"message\": \"Username, email, and password must be provided\"}";
             }
             if(username.length()<4 || username.length() > 20 || password.length()<4) {
                 res.status(401);
                 return "{\"message\": \"Username and/or password invalid\"}";
             }
-            Document registrationRequest = new Document().append("username", username).append("password", password).append("approvedState", false);
+            Document registrationRequest = new Document().append("username", username).append("email", email).append("password", password).append("approvedState", false);
             userRequestCollection.insertOne(registrationRequest);
 
 
@@ -89,6 +92,19 @@ public class Main {
                     notificationsCollection.updateOne(eq("username", notifiedUsername), Updates.push("notifications", notification));
                 }
             });
+            //Email Logic
+            try {
+                EmailService emailService = new EmailService();
+                emailService.sendEmail(email,"Pending Approval. ",
+                        "Hello " + username +  ",\n" +
+                                "Your request for creating an account is in review.\n" +
+                                "We will notify you when your account state is determined\n" +
+                                "\n" +
+                                "Sincerely,\n" +
+                                "The Recipe App Team");
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
 
             res.status(201);
             return "{\"message\": \"User request created successfully and has been send for review\"}";
@@ -168,11 +184,24 @@ public class Main {
             }
 
             String requestUsername = userRequest.getString("username");
+            String email = userRequest.getString("email");
             String requestPassword = userRequest.getString("password");
 
             Document user = new Document().append("username", requestUsername).append("password", requestPassword).append("approvedState", true);
             userCollection.insertOne(user);
-
+            //Email Logic
+            try {
+                EmailService emailService = new EmailService();
+                emailService.sendEmail(email,"Approved 🤙",
+                        "Hello " + username +  ",\n" +
+                                "Congratulations! You have been approved.\n" +
+                                "\n" +
+                                "Sincerely,\n" +
+                                "The Recipe App Team");
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+            System.out.println("User: " + username + " successfully added to the Server");
             res.status(201);
             return "{\"message\": \"User created successfully\"}";
         });
@@ -185,6 +214,21 @@ public class Main {
             Document userRequest = userRequestCollection.find(eq("username", username)).first();
             if (userRequest != null) {
                 userRequestCollection.deleteOne(userRequest);
+                String email = userRequest.getString("email");
+                //Email Logic
+                try {
+                    EmailService emailService = new EmailService();
+                    emailService.sendEmail(email,"Rejected 😢",
+                            "Hello " + username +  ",\n" +
+                                    "Unfortunately your account could not be approved at this time.\n" +
+                                    "We apologize for the inconvenience.\n" +
+                                    "\n" +
+                                    "Sincerely,\n" +
+                                    "The Recipe App Team");
+                    System.out.println("User: " + username + " successfully declined from the Server");
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
             } else {
                 res.status(400);
                 return "{\"message\": \"No such user request\"}";

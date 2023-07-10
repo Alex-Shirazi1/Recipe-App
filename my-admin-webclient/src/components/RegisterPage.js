@@ -4,10 +4,12 @@ import api from '../api';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
@@ -21,6 +23,7 @@ const RegisterPage = () => {
     try {
       await api.post('/api/register', {
         username,
+        email,
         password,
       });
       alert('Registration successful!');
@@ -31,12 +34,21 @@ const RegisterPage = () => {
 
   const validateInputs = () => {
     let isValid = true;
-
-    if (username.length < 4 || username.length > 20) {
+    if (username.length == 0) {
+      setUsernameError('Must input Username');
+      isValid = false
+    } else if (username.length < 4 || username.length > 20) {
       setUsernameError('Username must be between 4 and 20 characters');
       isValid = false;
     } else {
       setUsernameError('');
+    }
+    
+    if (email.length < 4) {
+      setEmailError('Must input valid Email');
+      isValid = false
+    } else {
+      setEmailError('');
     }
 
     if (password.length < 4) {
@@ -62,6 +74,9 @@ const RegisterPage = () => {
       <form onSubmit={handleRegister}>
         <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
         {usernameError && <p className="error-message">{usernameError}</p>}
+        <br />
+        <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        {emailError && <p className="error-message">{emailError}</p>}
         <br />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         {passwordError && <p className="error-message">{passwordError}</p>}
