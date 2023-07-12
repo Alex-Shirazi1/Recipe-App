@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.Arrays;
 import java.util.ArrayList;
+
+import org.bson.types.ObjectId;
 import spark.Session;
 
 import javax.mail.MessagingException;
@@ -58,6 +60,14 @@ public class Main {
             postCollection.insertOne(newPost);
 
             return "Post created";
+        });
+
+        get("/api/posts", (req, res) -> {
+            res.type("application/json");
+            FindIterable<Document> posts = postCollection.find();
+            ArrayList<Document> postsList = new ArrayList<>();
+            posts.into(postsList);
+            return new Gson().toJson(postsList);
         });
 
 
