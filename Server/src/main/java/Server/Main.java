@@ -19,6 +19,19 @@ import spark.Session;
 
 import javax.mail.MessagingException;
 
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSBuckets;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.stream.Collectors;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
+import com.mongodb.client.gridfs.model.GridFSFile;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+
 public class Main {
     public static void main(String[] args) {
         port(1235);
@@ -42,6 +55,7 @@ public class Main {
         MongoCollection<Document> userRequestCollection = db.getCollection("usersRequest");
         MongoCollection<Document> notificationsCollection = db.getCollection("notificationsCollection");
         MongoCollection<Document> service = db.getCollection("serviceCollection");
+        GridFSBucket imageStorage = GridFSBuckets.create(db, "images");
 
         System.out.println("connected to db");
 
@@ -53,9 +67,29 @@ public class Main {
             }
 
             String username = session.attribute("username");
-            String content = req.queryParams("content");
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+            Map<String, String> formFields = new HashMap<>();
+            ObjectId fileId = null;
 
-            Document newPost = new Document().append("username", username).append("content", content);
+            for (Part part : req.raw().getParts()) {
+                String fieldName = part.getName();
+                if (part.getSubmittedFileName() != null) {
+                    String fileName = part.getSubmittedFileName();
+                    InputStream fileContent = part.getInputStream();
+
+                    fileId = imageStorage.uploadFromStream(fileName, fileContent);
+                } else {
+                    String fieldValue = new BufferedReader(new InputStreamReader(part.getInputStream())).lines().collect(Collectors.joining("\n"));
+                    formFields.put(fieldName, fieldValue);
+                }
+            }
+
+            Document newPost = new Document().append("username", username);
+            formFields.forEach(newPost::append);
+
+            if (fileId != null) {
+                newPost.append("imageFileId", fileId.toHexString());
+            }
 
             postCollection.insertOne(newPost);
 
@@ -70,6 +104,24 @@ public class Main {
             return new Gson().toJson(postsList);
         });
 
+        get("/api/image/:id", (req, res) -> {
+            String id = req.params("id");
+            GridFSFile gridFSFile = imageStorage.find(eq("_id", new ObjectId(id))).first();
+
+            if (gridFSFile == null) {
+                res.status(404);
+                return "File not found";
+            }
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            imageStorage.downloadToStream(new ObjectId(id), outputStream);
+
+            HttpServletResponse raw = res.raw();
+            raw.getOutputStream().write(outputStream.toByteArray());
+            raw.getOutputStream().flush();
+            raw.getOutputStream().close();
+            return raw;
+        });
 
         post("/api/register", (req, res) -> {
             Gson gson = new Gson();

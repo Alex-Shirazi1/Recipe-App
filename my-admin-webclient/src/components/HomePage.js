@@ -29,7 +29,7 @@ const HomePage = () => {
       {!username && <p>Please login.</p>}
       {username && posts.map((post) => (
         <div className="post-card" key={post.id}>
-          <img src={post.image} alt="post" />
+          <img src={`/api/image/${post.imageFileId}`} alt="post" />
           <h2>{post.title}</h2>
           
         </div>
