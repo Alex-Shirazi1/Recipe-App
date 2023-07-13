@@ -22,6 +22,17 @@ const HomePage = () => {
       });
   }, []);
 
+  const handleDelete = (id) => {
+    console.log("LOL " + id)
+    api.delete(`/api/deletePost/${id}`)
+    .then(() => {
+        // Refresh posts after deleting
+        api.get('/api/posts')
+        .then((response) => {
+            setPosts(response.data);
+        });
+    });
+};
 
   return (
     <div>
@@ -31,6 +42,7 @@ const HomePage = () => {
         <div className="post-card" key={post.id}>
           <img src={`/api/image/${post.imageFileId}`} alt="post" />
           <h2>{post.title}</h2>
+          <button className = "delete-button" onClick={ () => { handleDelete(post._id)}}>Delete</button>
           
         </div>
       ))}

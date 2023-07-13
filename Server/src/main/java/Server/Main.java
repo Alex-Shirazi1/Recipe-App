@@ -101,6 +101,12 @@ public class Main {
             FindIterable<Document> posts = postCollection.find();
             ArrayList<Document> postsList = new ArrayList<>();
             posts.into(postsList);
+
+            for (Document post : postsList) {
+                ObjectId id = post.getObjectId("_id");
+                post.put("_id", id.toString());
+            }
+
             return new Gson().toJson(postsList);
         });
 
@@ -121,6 +127,31 @@ public class Main {
             raw.getOutputStream().flush();
             raw.getOutputStream().close();
             return raw;
+        });
+
+        delete("/api/deletePost/:id", (req, res) -> {
+            Session session = req.session(false);
+            if (session == null) {
+                res.status(401);
+                return "User is not logged in";
+            }
+
+            String postId = req.params("id");
+
+            // Fetch the post to get the imageFileId
+            Document post = postCollection.find(eq("_id", new ObjectId(postId))).first();
+
+            // If post not found
+            if (post == null) {
+                res.status(404);
+                return "Post not found";
+            }
+            if (post.get("imageFileId") != null) {
+                ObjectId imageFileId = new ObjectId(post.getString("imageFileId"));
+                imageStorage.delete(imageFileId);
+            }
+            postCollection.deleteOne(post);
+            return "Post deleted";
         });
 
         post("/api/register", (req, res) -> {

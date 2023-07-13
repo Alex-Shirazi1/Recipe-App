@@ -192,10 +192,25 @@ Copy code
 }
 
 .delete-button {
-  background-color: red;
-  color: white;
+  background-color: #f44336; /* Red */
   border: none;
-  padding: 5px 10px;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 1px;
   cursor: pointer;
+  border-radius: 5px;
+  float: right;
 }
 
+
+.delete-button:hover {
+  background-color: #da190b;
+}
+
+.delete-button:active {
+  background-color: #a11208;
+}
