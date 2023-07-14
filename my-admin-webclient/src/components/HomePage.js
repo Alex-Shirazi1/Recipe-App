@@ -46,9 +46,9 @@ const HomePage = () => {
           <h2>{post.title}</h2>
           <button className="delete-button" onClick={() => handleDelete(post._id)}>Delete</button>
         </div>
-      ))};
+      ))}
     </div>
-  };
+  }
 </div>
 
   );
