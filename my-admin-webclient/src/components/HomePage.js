@@ -35,18 +35,22 @@ const HomePage = () => {
 };
 
   return (
-    <div>
-      <h1>Welcome, {username || 'Guest'}!</h1>
-      {!username && <p>Please login.</p>}
-      {username && posts.map((post) => (
-        <div className="post-card" key={post.id}>
+<div>
+  <h1 id="home-title">Welcome, {username || 'Guest'}!</h1>
+  {!username && <p>Please login.</p>}
+  {username && 
+    <div className="post-grid">
+      {posts.map((post) => (
+        <div className="post-card" key={post._id}>
           <img src={`/api/image/${post.imageFileId}`} alt="post" />
           <h2>{post.title}</h2>
-          <button className = "delete-button" onClick={ () => { handleDelete(post._id)}}>Delete</button>
-          
+          <button className="delete-button" onClick={() => handleDelete(post._id)}>Delete</button>
         </div>
-      ))}
+      ))};
     </div>
+  };
+</div>
+
   );
 };
 
