@@ -6,10 +6,12 @@
 //
 
 import Foundation
-import Foundation
 
 protocol HomeEventHandlerProtocol {
     
+    var viewController: HomeViewControllerProtocol? { get set }
+    
+    func fetchPosts()
 }
 
 class HomeEventHandler: HomeEventHandlerProtocol {
@@ -21,4 +23,14 @@ class HomeEventHandler: HomeEventHandlerProtocol {
         self.interactor = interactor
         self.router = router
     }
+    
+    func fetchPosts() {
+        interactor.fetchPosts { [weak self] posts in
+            print("Posts received in HomeEventHandler: \(posts)") // add this
+            DispatchQueue.main.async {
+                self?.viewController?.updatePosts(posts)
+            }
+        }
+    }
 }
+

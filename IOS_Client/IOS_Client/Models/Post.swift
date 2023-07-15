@@ -9,8 +9,7 @@ import Foundation
 
 
 struct Post: Codable {
-    let _id: String  // For Mongo automated Unique IDS
+    let _id: String
     let title: String
     let body: String
 }
-

@@ -16,9 +16,9 @@ class HomeRouter: HomeRouterProtocol {
     static func createModule() -> UIViewController {
         let interactor: HomeInteractorProtocol = HomeInteractor()
         let router: HomeRouterProtocol = HomeRouter()
-        let eventHandler: HomeEventHandlerProtocol = HomeEventHandler(interactor: interactor, router: router)
+        var eventHandler: HomeEventHandlerProtocol = HomeEventHandler(interactor: interactor, router: router)
         let viewController = HomeViewController(eventHandler: eventHandler)
-        
+        eventHandler.viewController = viewController
         return viewController
     }
 }

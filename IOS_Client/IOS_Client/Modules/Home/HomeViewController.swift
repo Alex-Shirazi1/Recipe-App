@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 
 protocol HomeViewControllerProtocol: AnyObject {
-    
+    func updatePosts(_ posts: [Post])
 }
 
 class HomeViewController: UIViewController, HomeViewControllerProtocol, UITableViewDataSource, UITableViewDelegate {
-    var eventHandler: HomeEventHandlerProtocol?
+    var eventHandler: HomeEventHandlerProtocol
     
     private lazy var posts: [Post] = []
     
@@ -45,18 +45,18 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UITableV
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
-        
-        fetchPosts()
+        //legacyFetchPosts()
+        self.eventHandler.fetchPosts()
     }
-    func fetchPosts() {
+    func legacyfetchPosts() {
         guard let url = URL(string: MainConfig.serverAddress + "/posts") else { return }
-        
+
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print("Error: \(error)")
             } else if let data = data {
                 let decoder = JSONDecoder()
-                
+
                 if let posts = try? decoder.decode([Post].self, from: data) {
                     DispatchQueue.main.async {
                         self.posts = posts
@@ -65,9 +65,16 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UITableV
                 }
             }
         }
-        
+
         task.resume()
     }
+    
+    func updatePosts(_ posts: [Post]) {
+        print("Posts received in HomeViewController: \(posts)") // add this
+        self.posts = posts
+        tableView.reloadData()
+    }
+
     
     // MARK: - UITableViewDataSource
     
