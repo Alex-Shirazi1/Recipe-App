@@ -12,18 +12,24 @@ protocol HomeViewControllerProtocol: AnyObject {
     func updatePosts(_ posts: [Post])
 }
 
-class HomeViewController: UIViewController, HomeViewControllerProtocol, UITableViewDataSource, UITableViewDelegate {
+class HomeViewController: UIViewController, HomeViewControllerProtocol, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     var eventHandler: HomeEventHandlerProtocol
     
     private lazy var posts: [Post] = []
     
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "PostCell")
-        return tableView
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .white
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(RecipePostCell.self, forCellWithReuseIdentifier: "PostCell")
+        return collectionView
     }()
     
     init(eventHandler: HomeEventHandlerProtocol) {
@@ -38,12 +44,12 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            collectionView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
         //legacyFetchPosts()
         self.eventHandler.fetchPosts()
@@ -60,7 +66,7 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UITableV
                 if let posts = try? decoder.decode([Post].self, from: data) {
                     DispatchQueue.main.async {
                         self.posts = posts
-                        self.tableView.reloadData()
+                        self.collectionView.reloadData()
                     }
                 }
             }
@@ -70,25 +76,41 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UITableV
     }
     
     func updatePosts(_ posts: [Post]) {
-        print("Posts received in HomeViewController: \(posts)") // add this
+        print("Posts received in HomeViewController: \(posts)")
         self.posts = posts
-        tableView.reloadData()
+        collectionView.reloadData()
     }
 
     
-    // MARK: - UITableViewDataSource
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // MARK: - UICollectionViewDataSource
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(posts.count)
         return posts.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath)
-        
-        let post = posts[indexPath.row]
-        cell.textLabel?.text = post.title
-        
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCell", for: indexPath) as? RecipePostCell else {
+            fatalError("The dequeued cell is not an instance of RecipePostCell")
+        }
+
+        let post = posts[indexPath.item]
+        cell.title = post.title
+        guard let imageID = post.imageFileId else {
+            return cell
+        }
+        self.eventHandler.fetchImage(with: imageID) { image in
+            DispatchQueue.main.async {
+                cell.image = image
+            }
+        }
         return cell
     }
+
+    // MARK: - UICollectionViewDelegateFlowLayout
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.frame.width / 2) - 15, height: 200)
+    }
+
 }

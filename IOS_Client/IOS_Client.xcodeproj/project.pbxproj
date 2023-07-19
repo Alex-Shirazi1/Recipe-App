@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C3D1A852A65B5250053A10F /* RecipePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3D1A842A65B5250053A10F /* RecipePostCell.swift */; };
 		5C5011642A61E2F100EBFA8F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5011632A61E2F100EBFA8F /* HomeViewController.swift */; };
 		5C5011662A61E2F900EBFA8F /* HomeEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5011652A61E2F900EBFA8F /* HomeEventHandler.swift */; };
 		5C5011682A61E30500EBFA8F /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5011672A61E30500EBFA8F /* HomeInteractor.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C3D1A842A65B5250053A10F /* RecipePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePostCell.swift; sourceTree = "<group>"; };
 		5C5011632A61E2F100EBFA8F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5C5011652A61E2F900EBFA8F /* HomeEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventHandler.swift; sourceTree = "<group>"; };
 		5C5011672A61E30500EBFA8F /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				5C5011772A61E67400EBFA8F /* Post.swift */,
+				5C3D1A842A65B5250053A10F /* RecipePostCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 			files = (
 				5CDF34FA2A626EB200F9417D /* HomeDataManager.swift in Sources */,
 				5C84A3542A4E4A2800DF49C5 /* ViewController.swift in Sources */,
+				5C3D1A852A65B5250053A10F /* RecipePostCell.swift in Sources */,
 				5C5011662A61E2F900EBFA8F /* HomeEventHandler.swift in Sources */,
 				5C50116A2A61E30E00EBFA8F /* HomeRouter.swift in Sources */,
 				5C5011782A61E67400EBFA8F /* Post.swift in Sources */,

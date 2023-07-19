@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import UIKit
 
 protocol HomeEventHandlerProtocol {
     
     var viewController: HomeViewControllerProtocol? { get set }
     
     func fetchPosts()
+    func fetchImage(with id: String, completion: @escaping (UIImage?) -> Void)
 }
 
 class HomeEventHandler: HomeEventHandlerProtocol {
@@ -26,11 +28,15 @@ class HomeEventHandler: HomeEventHandlerProtocol {
     
     func fetchPosts() {
         interactor.fetchPosts { [weak self] posts in
-            print("Posts received in HomeEventHandler: \(posts)") // add this
+            print("Posts received in HomeEventHandler: \(posts)")
             DispatchQueue.main.async {
                 self?.viewController?.updatePosts(posts)
             }
         }
+    }
+    
+    func fetchImage(with id: String, completion: @escaping (UIImage?) -> Void) {
+        interactor.fetchImage(with: id, completion: completion)
     }
 }
 
