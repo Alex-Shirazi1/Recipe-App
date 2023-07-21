@@ -14,12 +14,14 @@ protocol HomeEventHandlerProtocol {
     
     func fetchPosts()
     func fetchImage(with id: String, completion: @escaping (UIImage?) -> Void)
+    
+    func didSelectPost(post: Post)
 }
 
 class HomeEventHandler: HomeEventHandlerProtocol {
     weak var viewController: HomeViewControllerProtocol?
-    var interactor: HomeInteractorProtocol
-    var router: HomeRouterProtocol
+    let interactor: HomeInteractorProtocol
+    let router: HomeRouterProtocol
     
     init(interactor: HomeInteractorProtocol, router: HomeRouterProtocol) {
         self.interactor = interactor
@@ -37,6 +39,10 @@ class HomeEventHandler: HomeEventHandlerProtocol {
     
     func fetchImage(with id: String, completion: @escaping (UIImage?) -> Void) {
         interactor.fetchImage(with: id, completion: completion)
+    }
+    
+    func didSelectPost(post: Post) {
+        router.navigateToPost(post: post)
     }
 }
 

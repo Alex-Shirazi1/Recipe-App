@@ -10,6 +10,8 @@ import UIKit
 
 protocol HomeRouterProtocol {
     static func createModule() -> UIViewController
+    
+    func navigateToPost(post: Post)
 }
 
 class HomeRouter: HomeRouterProtocol {
@@ -20,6 +22,10 @@ class HomeRouter: HomeRouterProtocol {
         let viewController = HomeViewController(eventHandler: eventHandler)
         eventHandler.viewController = viewController
         return viewController
+    }
+    
+    func navigateToPost(post: Post) {
+        let listingModule = ListingRouter.createModule(with: post)
     }
 }
 

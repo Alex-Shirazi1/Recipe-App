@@ -81,6 +81,10 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UICollec
         collectionView.reloadData()
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        eventHandler.didSelectPost(post: post)
+    }
     
     // MARK: - UICollectionViewDataSource
 
