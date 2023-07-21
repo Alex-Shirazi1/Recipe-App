@@ -16,15 +16,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        
-        let homeViewController = HomeRouter.createModule()
+        let homeNavigationViewController = UINavigationController()
+        let homeViewController = HomeRouter.createModule(navigationController: homeNavigationViewController)
+        homeNavigationViewController.viewControllers = [homeViewController]
+        homeNavigationViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [homeViewController]
-        
-        tabBarController.tabBar.items?[0].title = "Home"
-        tabBarController.tabBar.items?[0].image = UIImage(systemName: "house")
-        
+        tabBarController.viewControllers = [homeNavigationViewController]
+       
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
         

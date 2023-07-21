@@ -16,6 +16,11 @@ class ListingViewController: UIViewController, ListingViewControllerProtocol {
     let eventHandler: ListingEventHandlerProtocol
     let post: Post
     
+    let titleLabel = UILabel()
+    let bodyLabel = UILabel()
+    
+    let imageView = UIImage()
+    
     init(eventHandler: ListingEventHandlerProtocol, post: Post) {
         self.eventHandler = eventHandler
         self.post = post
@@ -28,11 +33,34 @@ class ListingViewController: UIViewController, ListingViewControllerProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("LOLSSFND")
+        view.backgroundColor = .white
+        print("LOL")
         print(post)
+        setView()
     }
     
-    
-
-    
+    private func setView() {
+        titleLabel.textAlignment = .center
+        titleLabel.text = post.title
+        titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        titleLabel.numberOfLines = 0
+        titleLabel.adjustsFontSizeToFitWidth = true
+        
+        bodyLabel.textAlignment = .center
+        bodyLabel.text = post.body
+        bodyLabel.numberOfLines = 0
+        
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, bodyLabel])
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
+    }
 }
