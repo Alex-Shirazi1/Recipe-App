@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ListingEventHandlerProtocol {
     var viewController: ListingViewControllerProtocol? { get set }
+    
+    func fetchImage(with id: String, completion: @escaping (UIImage?) -> Void)
 }
 class ListingEventHandler: ListingEventHandlerProtocol {
     weak var viewController: ListingViewControllerProtocol?
@@ -18,6 +21,10 @@ class ListingEventHandler: ListingEventHandlerProtocol {
     init(interactor: ListingInteractorProtocol, router: ListingRouterProtocol) {
         self.interactor = interactor
         self.router = router
+    }
+    
+    func fetchImage(with id: String, completion: @escaping (UIImage?) -> Void) {
+        interactor.fetchImage(with: id, completion: completion)
     }
     
 }

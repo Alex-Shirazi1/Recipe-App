@@ -12,6 +12,11 @@ protocol HomeDataManagerType {
     
 }
 class HomeDataManager: HomeDataManagerType {
+    let imageFactory: ImageFactoryType
+    
+    init(imageFactory: ImageFactoryType) {
+        self.imageFactory = imageFactory
+    }
     
     func fetchPosts(completion: @escaping ([Post]) -> Void) {
         guard let url = URL(string: MainConfig.serverAddress + "/posts") else {
@@ -38,20 +43,6 @@ class HomeDataManager: HomeDataManagerType {
         task.resume()
     }
     func fetchImage(with id: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: MainConfig.serverAddress + "/image/" + id) else {
-            completion(nil)
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                completion(nil)
-                return
-            }
-            let image = UIImage(data: data)
-            completion(image)
-        }
-        
-        task.resume()
+        imageFactory.fetchImage(with: id, completion: completion)
     }
 }

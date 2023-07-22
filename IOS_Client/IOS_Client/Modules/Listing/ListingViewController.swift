@@ -19,7 +19,11 @@ class ListingViewController: UIViewController, ListingViewControllerProtocol {
     let titleLabel = UILabel()
     let bodyLabel = UILabel()
     
-    let imageView = UIImage()
+    private lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
     
     init(eventHandler: ListingEventHandlerProtocol, post: Post) {
         self.eventHandler = eventHandler
@@ -50,7 +54,16 @@ class ListingViewController: UIViewController, ListingViewControllerProtocol {
         bodyLabel.text = post.body
         bodyLabel.numberOfLines = 0
         
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, bodyLabel])
+        if let imageID = post.imageFileId {
+             eventHandler.fetchImage(with: imageID) { [weak self] image in
+                 DispatchQueue.main.async {
+                     self?.imageView.image = image
+                 }
+             }
+         }
+         
+        
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, imageView, bodyLabel])
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
         stackView.alignment = .center
@@ -63,4 +76,6 @@ class ListingViewController: UIViewController, ListingViewControllerProtocol {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
+    
+   
 }

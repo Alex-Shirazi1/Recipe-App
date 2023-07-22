@@ -25,6 +25,7 @@
 		5C8B34182A6AFD80007DE7C0 /* ListingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B34172A6AFD80007DE7C0 /* ListingInteractor.swift */; };
 		5C8B341A2A6AFD8A007DE7C0 /* ListingDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B34192A6AFD8A007DE7C0 /* ListingDataManager.swift */; };
 		5C8B341C2A6AFD94007DE7C0 /* ListingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B341B2A6AFD94007DE7C0 /* ListingRouter.swift */; };
+		5C8B341F2A6B1D89007DE7C0 /* ImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B341E2A6B1D89007DE7C0 /* ImageFactory.swift */; };
 		5CDF34FA2A626EB200F9417D /* HomeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDF34F92A626EB200F9417D /* HomeDataManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		5C8B34172A6AFD80007DE7C0 /* ListingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingInteractor.swift; sourceTree = "<group>"; };
 		5C8B34192A6AFD8A007DE7C0 /* ListingDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDataManager.swift; sourceTree = "<group>"; };
 		5C8B341B2A6AFD94007DE7C0 /* ListingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingRouter.swift; sourceTree = "<group>"; };
+		5C8B341E2A6B1D89007DE7C0 /* ImageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFactory.swift; sourceTree = "<group>"; };
 		5CDF34F92A626EB200F9417D /* HomeDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,6 +138,7 @@
 		5C84A34E2A4E4A2800DF49C5 /* IOS_Client */ = {
 			isa = PBXGroup;
 			children = (
+				5C8B341D2A6B1D79007DE7C0 /* Factories */,
 				5C5011792A61E73D00EBFA8F /* Configuration */,
 				5C5011762A61E66800EBFA8F /* Models */,
 				5C50115F2A61E2C300EBFA8F /* Modules */,
@@ -168,6 +171,14 @@
 				5C8B341B2A6AFD94007DE7C0 /* ListingRouter.swift */,
 			);
 			path = Listing;
+			sourceTree = "<group>";
+		};
+		5C8B341D2A6B1D79007DE7C0 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				5C8B341E2A6B1D89007DE7C0 /* ImageFactory.swift */,
+			);
+			path = Factories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CDF34FA2A626EB200F9417D /* HomeDataManager.swift in Sources */,
+				5C8B341F2A6B1D89007DE7C0 /* ImageFactory.swift in Sources */,
 				5C8B341A2A6AFD8A007DE7C0 /* ListingDataManager.swift in Sources */,
 				5C84A3542A4E4A2800DF49C5 /* ViewController.swift in Sources */,
 				5C3D1A852A65B5250053A10F /* RecipePostCell.swift in Sources */,

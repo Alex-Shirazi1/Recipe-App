@@ -17,7 +17,7 @@ protocol HomeInteractorProtocol {
 class HomeInteractor: HomeInteractorProtocol {
     let dataManager: HomeDataManager
 
-    init(dataManager: HomeDataManager = HomeDataManager()) {
+    init(dataManager: HomeDataManager = HomeDataManager(imageFactory: ImageFactory())) {
         self.dataManager = dataManager
     }
 
