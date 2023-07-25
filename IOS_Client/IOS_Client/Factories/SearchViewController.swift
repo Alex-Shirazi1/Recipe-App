@@ -14,10 +14,35 @@ protocol SearchViewControllerProtocol: AnyObject {
 
 class SearchViewController: UIViewController, SearchViewControllerProtocol, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     let eventHandler: SearchEventHandlerProtocol
-    var searchBar: UISearchBar!
-    var collectionView: UICollectionView!
     var posts: [Post] = []
-
+    
+    lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.delegate = self
+        return searchBar
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: self.view.frame.size.width, height: 200)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(RecipePostCell.self, forCellWithReuseIdentifier: "PostCell")
+        collectionView.backgroundColor = .white
+        return collectionView
+    }()
+    
+    let infoLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Search for your favorite Recipes!"
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     init(eventHandler: SearchEventHandlerProtocol) {
         self.eventHandler = eventHandler
         super.init(nibName: nil, bundle: nil)
@@ -29,51 +54,46 @@ class SearchViewController: UIViewController, SearchViewControllerProtocol, UISe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        searchBar = UISearchBar()
-        searchBar.delegate = self
-
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: self.view.frame.size.width, height: 200)
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(RecipePostCell.self, forCellWithReuseIdentifier: "PostCell")
-        collectionView.backgroundColor = .white
-
+        
         self.view.addSubview(searchBar)
         self.view.addSubview(collectionView)
-
+        self.view.addSubview(infoLabel)
+        
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-
+            
             collectionView.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor),
             collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            
+            infoLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            infoLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
     }
-
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let query = searchBar.text else { return }
+        guard let query = searchBar.text else {
+            return
+        }
         eventHandler.searchPosts(query: query)
     }
-
+    
     func updateWithSearchResults(_ posts: [Post]) {
         self.posts = posts
+        if posts.isEmpty {
+            infoLabel.text = "No Recipes Found"
+            infoLabel.isHidden = false
+        } else {
+            infoLabel.isHidden = true
+        }
         collectionView.reloadData()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let post = posts[indexPath.row]
-        eventHandler.didSelectPost(post: post)
     }
     
     // MARK: UICollectionViewDelegate
