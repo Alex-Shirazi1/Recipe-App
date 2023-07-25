@@ -16,12 +16,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
+        
+        // HomeModule Logic
         let homeNavigationViewController = UINavigationController()
         let homeViewController = HomeRouter.createModule(navigationController: homeNavigationViewController)
         homeNavigationViewController.viewControllers = [homeViewController]
         homeNavigationViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
-        let tabBarController = tabbar(controllers: [homeNavigationViewController])
+        // Search Module Logic
+        
+        let searchNavigationController = UINavigationController()
+        let searchViewController = SearchRouter.createModule(navigationController: searchNavigationController)
+        searchNavigationController.viewControllers = [searchViewController]
+        searchNavigationController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
+        
+        let tabBarController = tabbar(controllers: [homeNavigationViewController, searchNavigationController])
        
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()

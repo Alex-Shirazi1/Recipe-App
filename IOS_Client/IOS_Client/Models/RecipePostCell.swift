@@ -48,20 +48,21 @@ class RecipePostCell: UICollectionViewCell {
         imageView.backgroundColor = .gray
         titleLabel.backgroundColor = .lightGray
 
-        
         // add constraints
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: topAnchor),
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 150),
             
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
-            
         ])
+        
+        let imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 150)
+        imageHeightConstraint.priority = UILayoutPriority(999)
+        imageHeightConstraint.isActive = true
     }
     
     required init?(coder: NSCoder) {

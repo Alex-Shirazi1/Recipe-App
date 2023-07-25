@@ -5,6 +5,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import static com.mongodb.client.model.Filters.*;
@@ -57,6 +59,9 @@ public class Main {
         MongoCollection<Document> service = db.getCollection("serviceCollection");
         GridFSBucket imageStorage = GridFSBuckets.create(db, "images");
 
+        postCollection.createIndex(Indexes.text("title"));
+
+
         System.out.println("connected to db");
 
         post("/api/createPost", (req, res) -> {
@@ -108,6 +113,20 @@ public class Main {
             }
 
             return new Gson().toJson(postsList);
+        });
+
+        get("/api/search", (req, res) -> {
+            res.type("application/json");
+            String searchQuery = req.queryParams("query");
+            //System.out.println(searchQuery);
+            ArrayList<Document> searchResults = new ArrayList<>();
+            postCollection.find(Filters.text(searchQuery)).into(searchResults);
+
+            for (Document searchResult: searchResults) {
+                ObjectId id = searchResult.getObjectId("_id");
+                searchResult.put("_id", id.toString());
+            }
+            return new Gson().toJson(searchResults);
         });
 
         get("/api/image/:id", (req, res) -> {
