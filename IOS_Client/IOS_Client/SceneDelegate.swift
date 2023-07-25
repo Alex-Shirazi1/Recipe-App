@@ -21,8 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         homeNavigationViewController.viewControllers = [homeViewController]
         homeNavigationViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
-        let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [homeNavigationViewController]
+        let tabBarController = tabbar(controllers: [homeNavigationViewController])
        
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
@@ -30,7 +29,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
     }
     
-
+    func tabbar(controllers: [UIViewController]) -> UITabBarController {
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = controllers
+        tabBarController.tabBar.isTranslucent = false
+        tabBarController.tabBar.barTintColor = .black
+        return tabBarController
+    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

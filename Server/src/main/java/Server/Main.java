@@ -209,11 +209,11 @@ public class Main {
                 Document credentials = service.find(eq("service", "emailService")).first();
                 EmailService emailService = new EmailService(credentials);
                 emailService.sendEmail(email,"Pending Approval. ",
-                        "Hello " + username +  ",\n" +
+                        "Hello " + username +  ",\n\n" +
                                 "Your request for creating an account is in review.\n" +
                                 "We will notify you when your account state is determined\n" +
                                 "\n" +
-                                "Sincerely,\n" +
+                                "Sincerely,\n\n" +
                                 "The Recipe App Team");
             } catch (MessagingException e) {
                 e.printStackTrace();
@@ -307,10 +307,10 @@ public class Main {
                 Document credentials = service.find(eq("service", "emailService")).first();
                 EmailService emailService = new EmailService(credentials);
                 emailService.sendEmail(email,"Approved 🤙",
-                        "Hello " + username +  ",\n" +
+                        "Hello " + username +  ",\n\n" +
                                 "Congratulations! You have been approved.\n" +
                                 "\n" +
-                                "Sincerely,\n" +
+                                "Sincerely,\n\n" +
                                 "The Recipe App Team");
             } catch (MessagingException e) {
                 e.printStackTrace();
@@ -334,11 +334,11 @@ public class Main {
                     Document credentials = service.find(eq("service", "emailService")).first();
                     EmailService emailService = new EmailService(credentials);
                     emailService.sendEmail(email,"Rejected 😢",
-                            "Hello " + username +  ",\n" +
+                            "Hello " + username +  ",\n\n" +
                                     "Unfortunately your account could not be approved at this time.\n" +
                                     "We apologize for the inconvenience.\n" +
                                     "\n" +
-                                    "Sincerely,\n" +
+                                    "Sincerely,\n\n" +
                                     "The Recipe App Team");
                     System.out.println("User: " + username + " successfully declined from the Server");
                 } catch (MessagingException e) {
