@@ -7,6 +7,7 @@ import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
 import Notifications from './components/Notifications';
 import CreatePost from './components/CreatePost';
+import FeedbackPage from './components/FeedbackPage';
 
 const App = () => {
   const [username, setUsername] = useState(null);
@@ -21,6 +22,7 @@ const App = () => {
             {loggedIn ? (
               <>
                 <Link to="/create">Create Post</Link>
+                <Link to="/feedback">Feedback</Link>
                 <Link to="/logout">Logout</Link>
                 <Notifications />
               </>
@@ -35,6 +37,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/create" element={<CreatePost />} />
+            <Route path="/feedback" element={<FeedbackPage />} />
             <Route path ="/register" element={<RegisterPage />}/>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/logout" element={<LogoutPage />} />

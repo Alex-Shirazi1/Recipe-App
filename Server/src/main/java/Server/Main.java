@@ -1,6 +1,8 @@
 package Server;
 
 import static spark.Spark.*;
+
+import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -56,6 +58,7 @@ public class Main {
         MongoCollection<Document> userCollection = db.getCollection("users");
         MongoCollection<Document> userRequestCollection = db.getCollection("usersRequest");
         MongoCollection<Document> notificationsCollection = db.getCollection("notificationsCollection");
+        MongoCollection<Document> feedbackCollection = db.getCollection("feedbackCollection");
         MongoCollection<Document> service = db.getCollection("serviceCollection");
         GridFSBucket imageStorage = GridFSBuckets.create(db, "images");
 
@@ -301,6 +304,48 @@ public class Main {
             return new Gson().toJson(notifications);
 
         });
+
+        //FeedBack APIs
+
+        post("/api/sendFeedback", (req, res) -> {
+            res.type("application/json");
+
+            FeedbackData data = new Gson().fromJson(req.body(), FeedbackData.class);
+
+            Document feedback = new Document();
+            feedback.append("recommend", data.getRecommend());
+            feedback.append("comments", data.getComments());
+
+            feedbackCollection.insertOne(feedback);
+
+            res.status(201);
+            return "";
+        });
+
+
+        get("/api/getFeedback", (req, res) -> {
+                res.type("application/json");
+                FindIterable<Document> allFeedback =  feedbackCollection.find();
+                ArrayList<Document> feedbackPosts = new ArrayList<>();
+                for (Document feedbackPost : allFeedback) {
+                    ObjectId id = feedbackPost.getObjectId("_id");
+                    feedbackPost.put("_id", id.toString());
+                    feedbackPosts.add(feedbackPost);
+                }
+                return new Gson().toJson(feedbackPosts);
+        });
+
+        delete("/api/deleteFeedback/:id", (req, res) -> {
+            res.type("application/json");
+            String id = req.params(":id");
+            Document doc = feedbackCollection.findOneAndDelete(Filters.eq("_id", new ObjectId(id)));
+            if (doc != null) {
+                return "Feedback deleted";
+            } else {
+                return "Feedback not deleted";
+            }
+        });
+
 
         post("/api/user", (req, res) -> {
             Gson gson = new Gson();
