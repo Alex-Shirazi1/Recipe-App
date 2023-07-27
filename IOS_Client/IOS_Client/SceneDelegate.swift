@@ -30,7 +30,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         searchNavigationController.viewControllers = [searchViewController]
         searchNavigationController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
         
-        let tabBarController = tabbar(controllers: [homeNavigationViewController, searchNavigationController])
+        // Settings Module Logic
+        
+        let settingsNavigationController = UINavigationController()
+        let settingsViewController = SettingsRouter.createModule(navigationController: settingsNavigationController)
+        settingsNavigationController.viewControllers = [settingsViewController]
+        settingsNavigationController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "oilcan"), tag: 2)
+        
+        let tabBarController = tabbar(controllers: [homeNavigationViewController, searchNavigationController, settingsNavigationController])
        
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()

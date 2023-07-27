@@ -101,10 +101,16 @@ class SearchViewController: UIViewController, SearchViewControllerProtocol, UISe
         return posts.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        eventHandler.didSelectPost(post: post)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCell", for: indexPath) as! RecipePostCell
         let post = posts[indexPath.row]
         cell.title = post.title
+        cell.username = post.username
         guard let imageID = post.imageFileId else {
             return cell
         }

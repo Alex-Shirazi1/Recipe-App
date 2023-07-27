@@ -21,7 +21,6 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UICollec
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -31,6 +30,7 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UICollec
         collectionView.register(RecipePostCell.self, forCellWithReuseIdentifier: "PostCell")
         return collectionView
     }()
+
     
     init(eventHandler: HomeEventHandlerProtocol) {
         self.eventHandler = eventHandler
@@ -100,6 +100,7 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UICollec
 
         let post = posts[indexPath.item]
         cell.title = post.title
+        cell.username = post.username
         guard let imageID = post.imageFileId else {
             return cell
         }
@@ -114,7 +115,7 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UICollec
     // MARK: - UICollectionViewDelegateFlowLayout
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width / 2) - 15, height: 200)
+        return CGSize(width: collectionView.frame.width, height: 200)
     }
 
 }
