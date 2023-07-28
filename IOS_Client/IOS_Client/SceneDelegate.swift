@@ -30,14 +30,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         searchNavigationController.viewControllers = [searchViewController]
         searchNavigationController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
         
+        // CreatePost Module Logic
+        
+        let createPostNavigationController = UINavigationController()
+        let createPostViewController = CreatePostRouter.createModule(navigationController: createPostNavigationController)
+        createPostNavigationController.viewControllers = [createPostViewController]
+        createPostNavigationController.tabBarItem = UITabBarItem(title: "create", image: UIImage(systemName: "plus"), tag: 2)
+        
         // Settings Module Logic
         
         let settingsNavigationController = UINavigationController()
         let settingsViewController = SettingsRouter.createModule(navigationController: settingsNavigationController)
         settingsNavigationController.viewControllers = [settingsViewController]
-        settingsNavigationController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "oilcan"), tag: 2)
+        settingsNavigationController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "oilcan"), tag: 3)
         
-        let tabBarController = tabbar(controllers: [homeNavigationViewController, searchNavigationController, settingsNavigationController])
+        let tabBarController = tabbar(controllers: [homeNavigationViewController, searchNavigationController, createPostNavigationController, settingsNavigationController])
        
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()

@@ -69,7 +69,7 @@ class FeedbackViewController: UIViewController, UITextViewDelegate, FeedbackView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        self.title = "Send Feedback"
+        self.title = "What do you think of our app?"
         
         self.feedbackSetup()
     }
