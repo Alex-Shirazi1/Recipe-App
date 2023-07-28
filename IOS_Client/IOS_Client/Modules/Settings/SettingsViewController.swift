@@ -24,7 +24,10 @@ class SettingsViewController: UIViewController, SettingsViewControllerProtocol, 
         fatalError("init(coder:) has not been implemented")
     }
     
-    let settingsOptions: [(text: String, image: String)] = [("Send Feedback", "person.3.sequence.fill")]
+    let settingsOptions: [(text: String, image: String)] = [
+        ("About", "info.circle.fill"),
+        ("Send Feedback", "person.3.sequence.fill")
+    ]
     
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -79,8 +82,13 @@ class SettingsViewController: UIViewController, SettingsViewControllerProtocol, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
+            eventHandler.navigateToAbout()
+        case 1:
             eventHandler.navigateToFeedBack()
+        default:
+            break
         }
     }
     

@@ -11,6 +11,8 @@ protocol SettingsEventHandlerProtocol: AnyObject {
     var viewController: SettingsViewControllerProtocol? { get set }
     
     func navigateToFeedBack()
+    
+    func navigateToAbout()
 }
 
 class SettingsEventHandler: SettingsEventHandlerProtocol {
@@ -25,5 +27,9 @@ class SettingsEventHandler: SettingsEventHandlerProtocol {
     
     func navigateToFeedBack() {
         router.navigateToFeedback()
+    }
+    
+    func navigateToAbout() {
+        router.navigateToAbout()
     }
 }

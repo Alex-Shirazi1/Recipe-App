@@ -13,6 +13,7 @@
 		5C4AA6C92A742824002468CD /* CreatePostInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6C82A742824002468CD /* CreatePostInteractor.swift */; };
 		5C4AA6CB2A742830002468CD /* CreatePostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6CA2A742830002468CD /* CreatePostRouter.swift */; };
 		5C4AA6CD2A742837002468CD /* CreatePostDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6CC2A742837002468CD /* CreatePostDataManager.swift */; };
+		5C4AA6CF2A742EED002468CD /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6CE2A742EED002468CD /* AboutViewController.swift */; };
 		5C5011642A61E2F100EBFA8F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5011632A61E2F100EBFA8F /* HomeViewController.swift */; };
 		5C5011662A61E2F900EBFA8F /* HomeEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5011652A61E2F900EBFA8F /* HomeEventHandler.swift */; };
 		5C5011682A61E30500EBFA8F /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5011672A61E30500EBFA8F /* HomeInteractor.swift */; };
@@ -57,6 +58,7 @@
 		5C4AA6C82A742824002468CD /* CreatePostInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostInteractor.swift; sourceTree = "<group>"; };
 		5C4AA6CA2A742830002468CD /* CreatePostRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostRouter.swift; sourceTree = "<group>"; };
 		5C4AA6CC2A742837002468CD /* CreatePostDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostDataManager.swift; sourceTree = "<group>"; };
+		5C4AA6CE2A742EED002468CD /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		5C5011632A61E2F100EBFA8F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5C5011652A61E2F900EBFA8F /* HomeEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventHandler.swift; sourceTree = "<group>"; };
 		5C5011672A61E30500EBFA8F /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				5C50117A2A61E74E00EBFA8F /* MainConfig.swift */,
+				5C4AA6CE2A742EED002468CD /* AboutViewController.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				5CEDFB7F2A72F6A100114D27 /* SettingsInteractor.swift in Sources */,
 				5C8B341C2A6AFD94007DE7C0 /* ListingRouter.swift in Sources */,
 				5C50117B2A61E74E00EBFA8F /* MainConfig.swift in Sources */,
+				5C4AA6CF2A742EED002468CD /* AboutViewController.swift in Sources */,
 				5CEDFB4E2A704AB200114D27 /* SearchViewController.swift in Sources */,
 				5CEDFB752A72F5DE00114D27 /* FeedbackData.swift in Sources */,
 				5CEDFB8C2A72F71100114D27 /* FeedbackRouter.swift in Sources */,

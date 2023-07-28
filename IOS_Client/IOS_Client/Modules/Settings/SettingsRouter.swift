@@ -12,6 +12,8 @@ protocol SettingsRouterProtocol: AnyObject {
     static func createModule(navigationController: UINavigationController) -> UIViewController
     
     func navigateToFeedback()
+    
+    func navigateToAbout()
 }
 
 class SettingsRouter: SettingsRouterProtocol {
@@ -30,5 +32,9 @@ class SettingsRouter: SettingsRouterProtocol {
     func navigateToFeedback() {
         let feedbackModule = FeedbackRouter.createModule()
         navigationController?.pushViewController(feedbackModule, animated: true)
+    }
+    func navigateToAbout() {
+        let aboutViewController = AboutViewController()
+        navigationController?.pushViewController(aboutViewController, animated: true)
     }
 }
