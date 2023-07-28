@@ -14,6 +14,11 @@
 		5C4AA6CB2A742830002468CD /* CreatePostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6CA2A742830002468CD /* CreatePostRouter.swift */; };
 		5C4AA6CD2A742837002468CD /* CreatePostDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6CC2A742837002468CD /* CreatePostDataManager.swift */; };
 		5C4AA6CF2A742EED002468CD /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6CE2A742EED002468CD /* AboutViewController.swift */; };
+		5C4AA6D22A74309C002468CD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6D12A74309C002468CD /* ProfileViewController.swift */; };
+		5C4AA6D42A7430A5002468CD /* ProfileEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6D32A7430A5002468CD /* ProfileEventHandler.swift */; };
+		5C4AA6D62A7430AB002468CD /* ProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6D52A7430AB002468CD /* ProfileInteractor.swift */; };
+		5C4AA6D82A7430B1002468CD /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6D72A7430B1002468CD /* ProfileRouter.swift */; };
+		5C4AA6DA2A7430B9002468CD /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6D92A7430B9002468CD /* ProfileDataManager.swift */; };
 		5C5011642A61E2F100EBFA8F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5011632A61E2F100EBFA8F /* HomeViewController.swift */; };
 		5C5011662A61E2F900EBFA8F /* HomeEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5011652A61E2F900EBFA8F /* HomeEventHandler.swift */; };
 		5C5011682A61E30500EBFA8F /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5011672A61E30500EBFA8F /* HomeInteractor.swift */; };
@@ -59,6 +64,11 @@
 		5C4AA6CA2A742830002468CD /* CreatePostRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostRouter.swift; sourceTree = "<group>"; };
 		5C4AA6CC2A742837002468CD /* CreatePostDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostDataManager.swift; sourceTree = "<group>"; };
 		5C4AA6CE2A742EED002468CD /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		5C4AA6D12A74309C002468CD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		5C4AA6D32A7430A5002468CD /* ProfileEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEventHandler.swift; sourceTree = "<group>"; };
+		5C4AA6D52A7430AB002468CD /* ProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInteractor.swift; sourceTree = "<group>"; };
+		5C4AA6D72A7430B1002468CD /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
+		5C4AA6D92A7430B9002468CD /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
 		5C5011632A61E2F100EBFA8F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5C5011652A61E2F900EBFA8F /* HomeEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventHandler.swift; sourceTree = "<group>"; };
 		5C5011672A61E30500EBFA8F /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
@@ -121,9 +131,22 @@
 			path = CreatePost;
 			sourceTree = "<group>";
 		};
+		5C4AA6D02A743089002468CD /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				5C4AA6D12A74309C002468CD /* ProfileViewController.swift */,
+				5C4AA6D32A7430A5002468CD /* ProfileEventHandler.swift */,
+				5C4AA6D52A7430AB002468CD /* ProfileInteractor.swift */,
+				5C4AA6D72A7430B1002468CD /* ProfileRouter.swift */,
+				5C4AA6D92A7430B9002468CD /* ProfileDataManager.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		5C50115F2A61E2C300EBFA8F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				5C4AA6D02A743089002468CD /* Profile */,
 				5C4AA6C12A7427C7002468CD /* CreatePost */,
 				5CEDFB792A72F67300114D27 /* SettingsModules */,
 				5CEDFB782A72F66E00114D27 /* Settings */,
@@ -358,6 +381,7 @@
 				5C8B341A2A6AFD8A007DE7C0 /* ListingDataManager.swift in Sources */,
 				5CEDFB812A72F6AB00114D27 /* SettingsRouter.swift in Sources */,
 				5C4AA6CB2A742830002468CD /* CreatePostRouter.swift in Sources */,
+				5C4AA6D82A7430B1002468CD /* ProfileRouter.swift in Sources */,
 				5CEDFB542A704AD200114D27 /* SearchRouter.swift in Sources */,
 				5C4AA6C32A7427E8002468CD /* CreatePostViewController.swift in Sources */,
 				5C84A3542A4E4A2800DF49C5 /* ViewController.swift in Sources */,
@@ -366,12 +390,15 @@
 				5C5011662A61E2F900EBFA8F /* HomeEventHandler.swift in Sources */,
 				5CEDFB862A72F6E600114D27 /* FeedbackViewController.swift in Sources */,
 				5C50116A2A61E30E00EBFA8F /* HomeRouter.swift in Sources */,
+				5C4AA6DA2A7430B9002468CD /* ProfileDataManager.swift in Sources */,
 				5C4AA6C52A7427F2002468CD /* CreatePostEventHandler.swift in Sources */,
 				5CEDFB562A704AE600114D27 /* SearchDataManager.swift in Sources */,
 				5C5011782A61E67400EBFA8F /* Post.swift in Sources */,
 				5C84A3502A4E4A2800DF49C5 /* AppDelegate.swift in Sources */,
 				5CEDFB7D2A72F69400114D27 /* SettingsEventHandler.swift in Sources */,
 				5CEDFB7F2A72F6A100114D27 /* SettingsInteractor.swift in Sources */,
+				5C4AA6D22A74309C002468CD /* ProfileViewController.swift in Sources */,
+				5C4AA6D42A7430A5002468CD /* ProfileEventHandler.swift in Sources */,
 				5C8B341C2A6AFD94007DE7C0 /* ListingRouter.swift in Sources */,
 				5C50117B2A61E74E00EBFA8F /* MainConfig.swift in Sources */,
 				5C4AA6CF2A742EED002468CD /* AboutViewController.swift in Sources */,
@@ -382,6 +409,7 @@
 				5CEDFB8E2A72F72100114D27 /* FeedbackDataManager.swift in Sources */,
 				5CEDFB522A704AC600114D27 /* SearchInteractor.swift in Sources */,
 				5CEDFB502A704ABD00114D27 /* SearchEventHandler.swift in Sources */,
+				5C4AA6D62A7430AB002468CD /* ProfileInteractor.swift in Sources */,
 				5C5011682A61E30500EBFA8F /* HomeInteractor.swift in Sources */,
 				5C8B34182A6AFD80007DE7C0 /* ListingInteractor.swift in Sources */,
 				5C84A3522A4E4A2800DF49C5 /* SceneDelegate.swift in Sources */,

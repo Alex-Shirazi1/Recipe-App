@@ -37,14 +37,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         createPostNavigationController.viewControllers = [createPostViewController]
         createPostNavigationController.tabBarItem = UITabBarItem(title: "create", image: UIImage(systemName: "plus"), tag: 2)
         
+        // Profile Module Logic
+        
+        let profileNavigationController = UINavigationController()
+        let profileViewController = ProfileRouter.createModule(navigationController: profileNavigationController)
+        profileNavigationController.viewControllers = [profileViewController]
+        profileNavigationController.tabBarItem = UITabBarItem(title: "my profile", image: UIImage(systemName: "person"), tag: 3)
+        
         // Settings Module Logic
         
         let settingsNavigationController = UINavigationController()
         let settingsViewController = SettingsRouter.createModule(navigationController: settingsNavigationController)
         settingsNavigationController.viewControllers = [settingsViewController]
-        settingsNavigationController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "oilcan"), tag: 3)
+        settingsNavigationController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "oilcan"), tag: 4)
         
-        let tabBarController = tabbar(controllers: [homeNavigationViewController, searchNavigationController, createPostNavigationController, settingsNavigationController])
+        let tabBarController = tabbar(controllers: [homeNavigationViewController, searchNavigationController, createPostNavigationController, profileNavigationController, settingsNavigationController])
        
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
