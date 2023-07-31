@@ -86,7 +86,7 @@ class LoginViewController: UIViewController, LoginViewControllerProtocol {
             eventHandler.proceedLogin(login: loginDetails) { res in
                
             }
-            eventHandler.postLogin()
+            eventHandler.postLogin(loginViewController: self, username: loginDetails.username)
         }
 
     }

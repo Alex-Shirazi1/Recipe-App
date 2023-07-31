@@ -11,7 +11,7 @@ import UIKit
 protocol LoginRouterProtocol: AnyObject {
     static func createModule(navigationController: UINavigationController) -> UIViewController
     
-    func postLogin()
+    func postLogin(loginViewController: LoginViewController, username: String)
 }
 
 class LoginRouter: LoginRouterProtocol {
@@ -32,7 +32,14 @@ class LoginRouter: LoginRouterProtocol {
         return viewController
     }
     
-    func postLogin() {
+    func postLogin(loginViewController: LoginViewController, username: String) {
         navigationController.popViewController(animated: true)
+        guard let topVC = navigationController.viewControllers.last else {
+            return
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let banner = BannerViewController(message: "Welcome back \(username)!")
+            banner.presentBanner(from: topVC)
+        }
     }
 }

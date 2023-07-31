@@ -13,7 +13,7 @@ protocol LoginEventHandlerProtocol: AnyObject {
     
     func proceedLogin(login: Login, completion: @escaping (Bool) -> Void)
     
-    func postLogin()
+    func postLogin(loginViewController: LoginViewController, username: String)
 }
 
 class LoginEventHandler: LoginEventHandlerProtocol {
@@ -31,7 +31,7 @@ class LoginEventHandler: LoginEventHandlerProtocol {
         interactor.proceedLogin(login: login, completion: completion)
     }
     
-    func postLogin() {
-        router.postLogin()
+    func postLogin(loginViewController: LoginViewController, username: String) {
+        router.postLogin(loginViewController: loginViewController, username: username)
     }
 }
