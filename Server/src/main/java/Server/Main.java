@@ -254,10 +254,8 @@ public class Main {
         post("/api/login", (req, res) -> {
             Gson gson = new Gson();
             Map<String, Object> requestData = gson.fromJson(req.body(), Map.class);
-            String username = (String) requestData.get("username");
-            String password = (String) requestData.get("password");
-            System.out.println(username);
-            System.out.println(password);
+            String username = requestData.get("username").toString().toLowerCase();
+            String password = requestData.get("password").toString().toLowerCase();
             res.type("application/json");
             Document userDocument = userCollection.find(and(eq("username", username), eq("password", password))).first();
             if(userDocument != null) {
