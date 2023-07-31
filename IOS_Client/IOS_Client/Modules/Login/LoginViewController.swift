@@ -12,7 +12,7 @@ import UIKit
 import UIKit
 
 protocol LoginViewControllerProtocol: AnyObject {
-    //func loginViewControllerDidTapLoginButton(_ controller: LoginViewController)
+    
 }
 
 class LoginViewController: UIViewController, LoginViewControllerProtocol {

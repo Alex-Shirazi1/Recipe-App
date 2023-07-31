@@ -51,28 +51,7 @@ class HomeViewController: UIViewController, HomeViewControllerProtocol, UICollec
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
-        //legacyFetchPosts()
         self.eventHandler.fetchPosts()
-    }
-    func legacyfetchPosts() {
-        guard let url = URL(string: MainConfig.serverAddress + "/posts") else { return }
-
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print("Error: \(error)")
-            } else if let data = data {
-                let decoder = JSONDecoder()
-
-                if let posts = try? decoder.decode([Post].self, from: data) {
-                    DispatchQueue.main.async {
-                        self.posts = posts
-                        self.collectionView.reloadData()
-                    }
-                }
-            }
-        }
-
-        task.resume()
     }
     
     func updatePosts(_ posts: [Post]) {
