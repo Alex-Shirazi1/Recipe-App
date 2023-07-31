@@ -183,6 +183,7 @@ public class Main {
             String username = (String) requestData.get("username");
             String email = (String) requestData.get("email");
             String password = (String) requestData.get("password");
+            Boolean isAdmin = (Boolean) requestData.get("isAdmin");
 
             // Check if the user already exists
             Document existingUser = userCollection.find(eq("username", username)).first();
@@ -200,12 +201,12 @@ public class Main {
                 res.status(401);
                 return "{\"message\": \"Username and/or password invalid\"}";
             }
-            Document registrationRequest = new Document().append("username", username).append("email", email).append("password", password).append("approvedState", false);
+            Document registrationRequest = new Document().append("username", username).append("email", email).append("password", password).append("isAdmin", isAdmin).append("approvedState", false);
+
+        if (isAdmin) {
             userRequestCollection.insertOne(registrationRequest);
-
-
-            // Notify all existing users about the new user
-            FindIterable<Document> allUsers = userCollection.find();
+            // Notify all existing admins about the new potential admin
+            FindIterable<Document> allUsers = userCollection.find(and(eq("isAdmin",true), eq("approvedState", true)));
             allUsers.forEach((Consumer<Document>) document -> {
                 Document notification = new Document();
                 notification.append("username", username);
@@ -242,7 +243,12 @@ public class Main {
             }
 
             res.status(201);
-            return "{\"message\": \"User request created successfully and has been send for review\"}";
+            System.out.println("END");
+            return "{\"message\": \"Admin request created successfully and has been send for review\"}";
+        }
+
+        userCollection.insertOne(registrationRequest);
+         return "{\"message\": \"User created successfully\"}";
         });
 
         post("/api/login", (req, res) -> {
@@ -250,6 +256,8 @@ public class Main {
             Map<String, Object> requestData = gson.fromJson(req.body(), Map.class);
             String username = (String) requestData.get("username");
             String password = (String) requestData.get("password");
+            System.out.println(username);
+            System.out.println(password);
             res.type("application/json");
             Document userDocument = userCollection.find(and(eq("username", username), eq("password", password))).first();
             if(userDocument != null) {
@@ -279,7 +287,7 @@ public class Main {
             return "{\"loggedIn\": false}";
         });
 
-        get("/api/notifications/:username", (req, res) -> {
+        get("/api/adminNotifications/:username", (req, res) -> {
             Session session = req.session(false); // If the session doesn't exist, returns null
             if (session == null) {
                 halt(401, "Unauthorized");
@@ -417,7 +425,7 @@ public class Main {
             return "{\"message\": \"User request deleted successfully\"}";
         });
 
-        delete("/api/notifications/:username", (req, res) -> {
+        delete("/api/adminNotifications/:username", (req, res) -> {
             String username = req.params("username");
             notificationsCollection.deleteMany(eq("requestedUsername", username));
             res.status(200);

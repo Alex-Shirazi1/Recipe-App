@@ -15,8 +15,11 @@ protocol SettingsViewControllerProtocol: AnyObject {
 class SettingsViewController: UIViewController, SettingsViewControllerProtocol, UITableViewDelegate, UITableViewDataSource {
     let eventHandler: SettingsEventHandlerProtocol
     
-    init(eventHandler: SettingsEventHandlerProtocol) {
+    let tableViewCellFactory: TableViewCellFactoryType
+    
+    init(eventHandler: SettingsEventHandlerProtocol, tableViewCellFactory: TableViewCellFactoryType) {
         self.eventHandler = eventHandler
+        self.tableViewCellFactory = tableViewCellFactory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,9 +27,10 @@ class SettingsViewController: UIViewController, SettingsViewControllerProtocol, 
         fatalError("init(coder:) has not been implemented")
     }
     
-    let settingsOptions: [(text: String, image: String)] = [
-        ("About", "info.circle.fill"),
-        ("Send Feedback", "person.3.sequence.fill")
+    let settingsOptions: [TableOption] = [
+        TableOption(text: "About", image: "info.circle.fill"),
+        TableOption(text: "Send Feedback", image: "person.3.sequence.fill"),
+        TableOption(text: "Terms and Conditions", image: "newspaper.fill")
     ]
     
     let tableView: UITableView = {
@@ -46,14 +50,14 @@ class SettingsViewController: UIViewController, SettingsViewControllerProtocol, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        view.backgroundColor = .white
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        self.view.addSubview(tableView)
-        self.view.addSubview(settingsLabel)
+        view.addSubview(tableView)
+        view.addSubview(settingsLabel)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -73,10 +77,11 @@ class SettingsViewController: UIViewController, SettingsViewControllerProtocol, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let option = settingsOptions[indexPath.row]
-        cell.textLabel?.text = option.text
-        cell.imageView?.image = UIImage(systemName: option.image)
+        let roughCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let tableOption = settingsOptions[indexPath.row]
+        
+        let cell = tableViewCellFactory.styleCell(cell: roughCell, tableOption: tableOption)
+        
         return cell
     }
     
@@ -87,6 +92,8 @@ class SettingsViewController: UIViewController, SettingsViewControllerProtocol, 
             eventHandler.navigateToAbout()
         case 1:
             eventHandler.navigateToFeedBack()
+        case 2:
+            eventHandler.navigateToTerms()
         default:
             break
         }

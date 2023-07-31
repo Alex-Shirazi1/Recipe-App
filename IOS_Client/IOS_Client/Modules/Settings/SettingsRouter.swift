@@ -14,6 +14,8 @@ protocol SettingsRouterProtocol: AnyObject {
     func navigateToFeedback()
     
     func navigateToAbout()
+    
+    func navigateToTerms()
 }
 
 class SettingsRouter: SettingsRouterProtocol {
@@ -24,7 +26,7 @@ class SettingsRouter: SettingsRouterProtocol {
         let router: SettingsRouter = SettingsRouter()
         router.navigationController = navigationController
         let eventHandler: SettingsEventHandlerProtocol = SettingsEventHandler(interactor: interactor, router: router)
-        let viewController = SettingsViewController(eventHandler: eventHandler)
+        let viewController = SettingsViewController(eventHandler: eventHandler, tableViewCellFactory: TableViewCellFactory())
         eventHandler.viewController = viewController
         return viewController
     }
@@ -36,5 +38,9 @@ class SettingsRouter: SettingsRouterProtocol {
     func navigateToAbout() {
         let aboutViewController = AboutViewController()
         navigationController?.pushViewController(aboutViewController, animated: true)
+    }
+    func navigateToTerms() {
+        let termsViewController = TermsViewController()
+        navigationController?.pushViewController(termsViewController, animated: true)
     }
 }

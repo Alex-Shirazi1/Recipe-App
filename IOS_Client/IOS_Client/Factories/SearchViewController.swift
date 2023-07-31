@@ -55,9 +55,9 @@ class SearchViewController: UIViewController, SearchViewControllerProtocol, UISe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(searchBar)
-        self.view.addSubview(collectionView)
-        self.view.addSubview(infoLabel)
+        view.addSubview(searchBar)
+        view.addSubview(collectionView)
+        view.addSubview(infoLabel)
         
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false

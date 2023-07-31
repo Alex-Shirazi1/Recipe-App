@@ -20,8 +20,8 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "About"
-        self.view.backgroundColor = .white
+        title = "About"
+        view.backgroundColor = .white
         
         tableView.delegate = self
         tableView.dataSource = self

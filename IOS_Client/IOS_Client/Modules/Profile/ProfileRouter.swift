@@ -10,6 +10,10 @@ import UIKit
 
 protocol ProfileRouterProtocol: AnyObject {
     static func createModule(navigationController: UINavigationController) -> UIViewController
+    
+    func navigateToLoginModule()
+    
+    func navigateToRegisterModule()
 }
 
 class ProfileRouter: ProfileRouterProtocol {
@@ -20,8 +24,19 @@ class ProfileRouter: ProfileRouterProtocol {
         let router: ProfileRouter = ProfileRouter()
         router.navigationController = navigationController
         let eventHandler: ProfileEventHandlerProtocol = ProfileEventHandler(interactor: interactor, router: router)
-        let viewController = ProfileViewController(eventHandler: eventHandler)
+        let viewController = ProfileViewController(eventHandler: eventHandler, tableViewCellFactory: TableViewCellFactory())
         eventHandler.viewController = viewController
         return viewController
     }
-}
+    
+    func navigateToLoginModule() {
+        let loginModule = LoginRouter.createModule()
+        navigationController?.pushViewController(loginModule, animated: true)
+    }
+    
+    func navigateToRegisterModule() {
+        let loginModule = RegisterRouter.createModule()
+        navigationController?.pushViewController(loginModule, animated: true)
+    }
+    }
+

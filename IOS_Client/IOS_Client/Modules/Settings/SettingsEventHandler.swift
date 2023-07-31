@@ -13,6 +13,8 @@ protocol SettingsEventHandlerProtocol: AnyObject {
     func navigateToFeedBack()
     
     func navigateToAbout()
+    
+    func navigateToTerms()
 }
 
 class SettingsEventHandler: SettingsEventHandlerProtocol {
@@ -31,5 +33,8 @@ class SettingsEventHandler: SettingsEventHandlerProtocol {
     
     func navigateToAbout() {
         router.navigateToAbout()
+    }
+    func navigateToTerms() {
+        router.navigateToTerms()
     }
 }

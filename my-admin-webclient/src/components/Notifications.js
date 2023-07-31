@@ -13,7 +13,7 @@ const Notifications = () => {
 
   const fetchNotifications = () => {
     if (username) {
-      api.get(`/api/notifications/${username}`, { withCredentials: true })
+      api.get(`/api/adminNotifications/${username}`, { withCredentials: true })
       .then((response) => {
         if(Array.isArray(response.data)) {
           setNotifications(response.data);
@@ -31,16 +31,17 @@ const Notifications = () => {
 
   const handleApprove = (userRequest) => {
     console.log(JSON.stringify(userRequest))
+    console.log("LOLLLL:")
     api.post('/api/user', userRequest)
     .then(() => 
-     api.delete(`/api/notifications/${userRequest.username}`))
+     api.delete(`/api/adminNotifications/${userRequest.username}`))
     .then(() => fetchNotifications())
     .catch(error => console.error('Approval failed:', error));
   }
 
 const handleDisapprove = (userRequest) => {
     api.post('/api/userDecline', userRequest) 
-    .then(() => api.delete(`/api/notifications/${userRequest.username}`))
+    .then(() => api.delete(`/api/adminNotifications/${userRequest.username}`))
     .then(() => fetchNotifications())
     .catch(error => console.error('Disapproval failed:', error));
   }

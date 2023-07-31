@@ -12,23 +12,33 @@ const RegisterPage = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [isLoading, setIsLoading] = useState(false); 
 
   const handleRegister = async (e) => {
     e.preventDefault();
     
-    if (!validateInputs()) {
+    if (!validateInputs() || isLoading) {
       return;
     }
+
+      setIsLoading(true);
 
     try {
       await api.post('/api/register', {
         username,
         email,
         password,
+        isAdmin: true
       });
       alert('Registration successful!');
     } catch (err) {
       setErrorMessage('Error occurred while registering');
+    } finally {
+      setIsLoading(false);
+      setUsername('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
     }
   };
 
@@ -68,27 +78,31 @@ const RegisterPage = () => {
     return isValid;
   }
 
+
   return (
     <div className="form-container">
       <h2 className="form-title">Register</h2>
-      <form onSubmit={handleRegister}>
-        <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        {usernameError && <p className="error-message">{usernameError}</p>}
-        <br />
-        <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        {emailError && <p className="error-message">{emailError}</p>}
-        <br />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        {passwordError && <p className="error-message">{passwordError}</p>}
-        <br />
-        <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-        {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
-        <br />
-        <button type="submit">Register</button>
-      </form>
+      {isLoading ? (
+        <p>Loading...</p>  // This can be replaced by a custom loading animation
+      ) : (
+        <form onSubmit={handleRegister}>
+          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+          {usernameError && <p className="error-message">{usernameError}</p>}
+          <br />
+          <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          {emailError && <p className="error-message">{emailError}</p>}
+          <br />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          {passwordError && <p className="error-message">{passwordError}</p>}
+          <br />
+          <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
+          <br />
+          <button type="submit" disabled={isLoading}>Register</button>
+        </form>
+      )}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
   );
 }
-
 export default RegisterPage;

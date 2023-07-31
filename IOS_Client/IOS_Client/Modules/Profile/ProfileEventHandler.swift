@@ -10,6 +10,8 @@ import Foundation
 
 protocol ProfileEventHandlerProtocol: AnyObject {
     var viewController: ProfileViewControllerProtocol? { get set }
+    func signInButtonTapped()
+    func registerButtonTapped()
 }
 
 class ProfileEventHandler: ProfileEventHandlerProtocol {
@@ -23,4 +25,12 @@ class ProfileEventHandler: ProfileEventHandlerProtocol {
         self.router = router
     }
     
+    func signInButtonTapped() {
+        router.navigateToLoginModule()
+    }
+    
+    func registerButtonTapped() {
+        router.navigateToRegisterModule()
+    }
 }
+
