@@ -30,13 +30,19 @@ class ProfileRouter: ProfileRouterProtocol {
     }
     
     func navigateToLoginModule() {
-        let loginModule = LoginRouter.createModule()
-        navigationController?.pushViewController(loginModule, animated: true)
+        guard let navigationController else {
+            return
+        }
+        let loginModule = LoginRouter.createModule(navigationController: navigationController)
+        navigationController.pushViewController(loginModule, animated: true)
     }
     
     func navigateToRegisterModule() {
-        let loginModule = RegisterRouter.createModule()
-        navigationController?.pushViewController(loginModule, animated: true)
+        guard let navigationController else {
+            return
+        }
+        let registerModule = RegisterRouter.createModule()
+        navigationController.pushViewController(registerModule, animated: true)
     }
     }
 

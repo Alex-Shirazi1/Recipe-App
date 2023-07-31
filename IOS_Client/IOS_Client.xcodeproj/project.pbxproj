@@ -68,6 +68,7 @@
 		5CEDFB8A2A72F70300114D27 /* FeedbackInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEDFB892A72F70300114D27 /* FeedbackInteractor.swift */; };
 		5CEDFB8C2A72F71100114D27 /* FeedbackRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEDFB8B2A72F71100114D27 /* FeedbackRouter.swift */; };
 		5CEDFB8E2A72F72100114D27 /* FeedbackDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEDFB8D2A72F72100114D27 /* FeedbackDataManager.swift */; };
+		5CF716532A783ADE005342F0 /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF716522A783ADE005342F0 /* BannerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,6 +135,7 @@
 		5CEDFB892A72F70300114D27 /* FeedbackInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackInteractor.swift; sourceTree = "<group>"; };
 		5CEDFB8B2A72F71100114D27 /* FeedbackRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackRouter.swift; sourceTree = "<group>"; };
 		5CEDFB8D2A72F72100114D27 /* FeedbackDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackDataManager.swift; sourceTree = "<group>"; };
+		5CF716522A783ADE005342F0 /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +343,7 @@
 		5CEDFB792A72F67300114D27 /* SettingsModules */ = {
 			isa = PBXGroup;
 			children = (
+				5CF716512A783AD0005342F0 /* HelperModules */,
 				5C4AA6CE2A742EED002468CD /* AboutViewController.swift */,
 				5C556B632A77A2E50094BE42 /* TermsViewController.swift */,
 				5CEDFB842A72F6C600114D27 /* Feedback */,
@@ -358,6 +361,14 @@
 				5CEDFB8D2A72F72100114D27 /* FeedbackDataManager.swift */,
 			);
 			path = Feedback;
+			sourceTree = "<group>";
+		};
+		5CF716512A783AD0005342F0 /* HelperModules */ = {
+			isa = PBXGroup;
+			children = (
+				5CF716522A783ADE005342F0 /* BannerViewController.swift */,
+			);
+			path = HelperModules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -461,6 +472,7 @@
 				5C5011782A61E67400EBFA8F /* Post.swift in Sources */,
 				5C84A3502A4E4A2800DF49C5 /* AppDelegate.swift in Sources */,
 				5CEDFB7D2A72F69400114D27 /* SettingsEventHandler.swift in Sources */,
+				5CF716532A783ADE005342F0 /* BannerViewController.swift in Sources */,
 				5CEDFB7F2A72F6A100114D27 /* SettingsInteractor.swift in Sources */,
 				5C4AA6D22A74309C002468CD /* ProfileViewController.swift in Sources */,
 				5C4AA6D42A7430A5002468CD /* ProfileEventHandler.swift in Sources */,

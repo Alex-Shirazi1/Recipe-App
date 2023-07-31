@@ -12,6 +12,8 @@ protocol LoginEventHandlerProtocol: AnyObject {
     var viewController: LoginViewControllerProtocol? { get set }
     
     func proceedLogin(login: Login, completion: @escaping (Bool) -> Void)
+    
+    func postLogin()
 }
 
 class LoginEventHandler: LoginEventHandlerProtocol {
@@ -27,5 +29,9 @@ class LoginEventHandler: LoginEventHandlerProtocol {
     
     func proceedLogin(login: Login, completion: @escaping (Bool) -> Void) {
         interactor.proceedLogin(login: login, completion: completion)
+    }
+    
+    func postLogin() {
+        router.postLogin()
     }
 }

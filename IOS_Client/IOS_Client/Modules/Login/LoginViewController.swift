@@ -84,8 +84,9 @@ class LoginViewController: UIViewController, LoginViewControllerProtocol {
             print("Username: \(username), Password: \(password)")
             let loginDetails = Login(username: username, password: password)
             eventHandler.proceedLogin(login: loginDetails) { res in
-                print(res)
+               
             }
+            eventHandler.postLogin()
         }
 
     }

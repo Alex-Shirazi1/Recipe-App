@@ -10,7 +10,9 @@ import Foundation
 
 protocol ProfileEventHandlerProtocol: AnyObject {
     var viewController: ProfileViewControllerProtocol? { get set }
+    
     func signInButtonTapped()
+    
     func registerButtonTapped()
 }
 
