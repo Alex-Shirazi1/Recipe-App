@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let version = "Alpha 1.0.1" // TODO: use remote config to determine version
+    let version = "Alpha 1.0.3" // TODO: use remote config to determine version
     
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
