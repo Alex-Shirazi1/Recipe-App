@@ -62,7 +62,7 @@ class LoginViewController: UIViewController, LoginViewControllerProtocol {
         view.addSubview(usernameField)
         view.addSubview(passwordField)
         view.addSubview(loginButton)
-
+        
         NSLayoutConstraint.activate([
             usernameField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             usernameField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -76,17 +76,33 @@ class LoginViewController: UIViewController, LoginViewControllerProtocol {
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
-        @objc func didTapLoginButton() {
-            guard let username = usernameField.text, let password = passwordField.text else {
-                print("Fields are empty.")
-                return
-            }
-            print("Username: \(username), Password: \(password)")
-            let loginDetails = Login(username: username, password: password)
-            eventHandler.proceedLogin(login: loginDetails) { res in
-               
-            }
-            eventHandler.postLogin(loginViewController: self, username: loginDetails.username)
+    @objc func didTapLoginButton() {
+        guard let username = usernameField.text, let password = passwordField.text else {
+            print("Fields are empty.")
+            return
         }
-
+        print("Username: \(username), Password: \(password)")
+        let loginDetails = Login(username: username, password: password)
+        eventHandler.proceedLogin(login: loginDetails) { error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("Login error: \(error.localizedDescription)")
+                    let alert = UIAlertController(title: "Login Failed", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                    return
+                }
+                
+                if TokenFactory.appToken.isLoggedIn() {
+                    /// If user is logged in, we must remove login screen
+                    self.eventHandler.postLogin(loginViewController: self, username: loginDetails.username)
+                } else {
+                    let alert = UIAlertController(title: "Login Failed", message: "Hmm, something went wrong", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+        
     }
+}

@@ -13,10 +13,9 @@ import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import static com.mongodb.client.model.Filters.*;
 import com.google.gson.Gson;
-import java.util.Map;
+
+import java.util.*;
 import java.util.function.Consumer;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 import org.bson.types.ObjectId;
 import spark.Session;
@@ -28,7 +27,6 @@ import com.mongodb.client.gridfs.GridFSBuckets;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.stream.Collectors;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
@@ -261,16 +259,20 @@ public class Main {
             if(userDocument != null) {
                 Session session = req.session(true); // If the session doesn't exist, a new one will be created.
                 session.attribute("username", username);
-                return "{\"loggedIn\": true, \"username\": \"" + username + "\"}";
+
+                // Token Logic so we can hold integrity of the user logged in with our clients
+                String token = UUID.randomUUID().toString();
+                session.attribute("token", token);
+                return "{\"loggedIn\": true, \"username\": \"" + username + "\", \"token\": \"" + token + "\"}";
             } else {
                 Document registrationRequest = userRequestCollection.find(and(eq("username", username), eq("password", password))).first();
                 if (registrationRequest != null) {
                     System.out.println("Account Not Approved");
-                    return "{\"loggedIn\": false}";
+                    return "{\"loggedIn\": false, \"errorMessage\": \"Admin Account not approved\"}";
                 }
             }
             System.out.println("Could not find account or wrong username/password");
-            return "{\"loggedIn\": false}";
+            return "{\"loggedIn\": false, \"errorMessage\": \"Invalid username or password\"}";
         });
 
 

@@ -57,11 +57,18 @@ class BannerViewController: UIViewController {
         }
     }
     
-    func presentBanner(from viewController: UIViewController) {
+    func presentBanner(from viewController: UIViewController, withDelay: Bool = false) {
         self.modalPresentationStyle = .overFullScreen
         self.modalTransitionStyle = .crossDissolve
-        viewController.present(self, animated: true, completion: nil)
+        if withDelay {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                viewController.present(self, animated: true, completion: nil)
+            }
+        } else {
+            viewController.present(self, animated: true, completion: nil)
+        }
     }
+
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

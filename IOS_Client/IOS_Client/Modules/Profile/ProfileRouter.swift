@@ -11,7 +11,7 @@ import UIKit
 protocol ProfileRouterProtocol: AnyObject {
     static func createModule(navigationController: UINavigationController) -> UIViewController
     
-    func navigateToLoginModule()
+    func navigateToLoginModule(profileViewController: ProfileViewControllerProtocol)
     
     func navigateToRegisterModule()
 }
@@ -29,11 +29,11 @@ class ProfileRouter: ProfileRouterProtocol {
         return viewController
     }
     
-    func navigateToLoginModule() {
+    func navigateToLoginModule(profileViewController: ProfileViewControllerProtocol) {
         guard let navigationController else {
             return
         }
-        let loginModule = LoginRouter.createModule(navigationController: navigationController)
+        let loginModule = LoginRouter.createModule(navigationController: navigationController, profileViewController: profileViewController)
         navigationController.pushViewController(loginModule, animated: true)
     }
     

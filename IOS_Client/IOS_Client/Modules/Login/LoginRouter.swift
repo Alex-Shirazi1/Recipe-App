@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol LoginRouterProtocol: AnyObject {
-    static func createModule(navigationController: UINavigationController) -> UIViewController
+    static func createModule(navigationController: UINavigationController, profileViewController: ProfileViewControllerProtocol) -> UIViewController
     
     func postLogin(loginViewController: LoginViewController, username: String)
 }
@@ -18,14 +18,17 @@ class LoginRouter: LoginRouterProtocol {
     
     var navigationController: UINavigationController
     
-    init(navigationController: UINavigationController) {
+    let profileViewController: ProfileViewControllerProtocol
+    
+    init(navigationController: UINavigationController, profileViewController: ProfileViewControllerProtocol) {
         self.navigationController = navigationController
+        self.profileViewController = profileViewController
     }
     
-    static func createModule(navigationController navigationViewController: UINavigationController) -> UIViewController {
+    static func createModule(navigationController navigationViewController: UINavigationController, profileViewController: ProfileViewControllerProtocol) -> UIViewController {
         
         let interactor: LoginInteractorProtocol = LoginInteractor()
-        let router: LoginRouter = LoginRouter(navigationController: navigationViewController)
+        let router: LoginRouter = LoginRouter(navigationController: navigationViewController, profileViewController: profileViewController)
         let eventHandler: LoginEventHandlerProtocol = LoginEventHandler(interactor: interactor, router: router)
         let viewController = LoginViewController(eventHandler: eventHandler)
         eventHandler.viewController = viewController
@@ -33,13 +36,14 @@ class LoginRouter: LoginRouterProtocol {
     }
     
     func postLogin(loginViewController: LoginViewController, username: String) {
+        profileViewController.updateUI()
         navigationController.popViewController(animated: true)
         guard let topVC = navigationController.viewControllers.last else {
             return
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        //DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let banner = BannerViewController(message: "Welcome back \(username)!")
-            banner.presentBanner(from: topVC)
-        }
+            banner.presentBanner(from: topVC, withDelay: true)
+       // }
     }
 }
