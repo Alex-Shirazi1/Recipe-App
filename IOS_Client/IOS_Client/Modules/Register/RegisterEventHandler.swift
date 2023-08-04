@@ -10,6 +10,8 @@ import Foundation
 
 protocol RegisterEventHandlerProtocol: AnyObject {
     var viewController: RegisterViewControllerProtocol? { get set }
+    
+    func navigateToLogin()
 }
 
 class RegisterEventHandler: RegisterEventHandlerProtocol {
@@ -21,6 +23,10 @@ class RegisterEventHandler: RegisterEventHandlerProtocol {
     init(interactor: RegisterInteractorProtocol, router: RegisterRouterProtocol) {
         self.interactor = interactor
         self.router = router
+    }
+    
+    func navigateToLogin() {
+        router.navigateToLogin()
     }
     
 }

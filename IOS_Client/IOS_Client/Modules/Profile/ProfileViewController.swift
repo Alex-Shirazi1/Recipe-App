@@ -137,9 +137,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             // If logged out, we want to hide logout
             switch indexPath.row {
             case 0:
-                eventHandler?.signInButtonTapped(profileViewController: self)
+                eventHandler?.loginRoute(profileViewController: self)
             case 1:
-                eventHandler?.registerButtonTapped()
+                eventHandler?.registerButtonTapped(profileViewController: self)
             default:
                 break
             }

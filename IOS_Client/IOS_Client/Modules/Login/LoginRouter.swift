@@ -41,9 +41,7 @@ class LoginRouter: LoginRouterProtocol {
         guard let topVC = navigationController.viewControllers.last else {
             return
         }
-        //DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let banner = BannerViewController(message: "Welcome back \(username)!")
             banner.presentBanner(from: topVC, withDelay: true)
-       // }
     }
 }

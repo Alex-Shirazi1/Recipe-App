@@ -53,6 +53,7 @@
 		5C8B341F2A6B1D89007DE7C0 /* ImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B341E2A6B1D89007DE7C0 /* ImageFactory.swift */; };
 		5C8CB4222A7C463800FC32F7 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C8CB4212A7C463800FC32F7 /* KeychainSwift */; };
 		5C8CB4242A7C468200FC32F7 /* TokenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8CB4232A7C468200FC32F7 /* TokenFactory.swift */; };
+		5C8CB4262A7C708100FC32F7 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8CB4252A7C708100FC32F7 /* Register.swift */; };
 		5CDF34FA2A626EB200F9417D /* HomeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDF34F92A626EB200F9417D /* HomeDataManager.swift */; };
 		5CEDFB4E2A704AB200114D27 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEDFB4D2A704AB200114D27 /* SearchViewController.swift */; };
 		5CEDFB502A704ABD00114D27 /* SearchEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEDFB4F2A704ABD00114D27 /* SearchEventHandler.swift */; };
@@ -121,6 +122,7 @@
 		5C8B341B2A6AFD94007DE7C0 /* ListingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingRouter.swift; sourceTree = "<group>"; };
 		5C8B341E2A6B1D89007DE7C0 /* ImageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFactory.swift; sourceTree = "<group>"; };
 		5C8CB4232A7C468200FC32F7 /* TokenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenFactory.swift; sourceTree = "<group>"; };
+		5C8CB4252A7C708100FC32F7 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		5CDF34F92A626EB200F9417D /* HomeDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataManager.swift; sourceTree = "<group>"; };
 		5CEDFB4D2A704AB200114D27 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = IOS_Client/Factories/SearchViewController.swift; sourceTree = SOURCE_ROOT; };
 		5CEDFB4F2A704ABD00114D27 /* SearchEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchEventHandler.swift; path = IOS_Client/Factories/SearchEventHandler.swift; sourceTree = SOURCE_ROOT; };
@@ -233,6 +235,7 @@
 				5CEDFB742A72F5DE00114D27 /* FeedbackData.swift */,
 				5C556B5F2A7728EE0094BE42 /* TableOption.swift */,
 				5C556B612A777B0A0094BE42 /* Login.swift */,
+				5C8CB4252A7C708100FC32F7 /* Register.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				5CEDFB7F2A72F6A100114D27 /* SettingsInteractor.swift in Sources */,
 				5C4AA6D22A74309C002468CD /* ProfileViewController.swift in Sources */,
 				5C4AA6D42A7430A5002468CD /* ProfileEventHandler.swift in Sources */,
+				5C8CB4262A7C708100FC32F7 /* Register.swift in Sources */,
 				5C8B341C2A6AFD94007DE7C0 /* ListingRouter.swift in Sources */,
 				5C50117B2A61E74E00EBFA8F /* MainConfig.swift in Sources */,
 				5C4AA6CF2A742EED002468CD /* AboutViewController.swift in Sources */,

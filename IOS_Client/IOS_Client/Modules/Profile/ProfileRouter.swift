@@ -13,7 +13,7 @@ protocol ProfileRouterProtocol: AnyObject {
     
     func navigateToLoginModule(profileViewController: ProfileViewControllerProtocol)
     
-    func navigateToRegisterModule()
+    func navigateToRegisterModule(profileViewController: ProfileViewControllerProtocol)
 }
 
 class ProfileRouter: ProfileRouterProtocol {
@@ -37,11 +37,13 @@ class ProfileRouter: ProfileRouterProtocol {
         navigationController.pushViewController(loginModule, animated: true)
     }
     
-    func navigateToRegisterModule() {
+    func navigateToRegisterModule(profileViewController: ProfileViewControllerProtocol) {
+        
+        
         guard let navigationController else {
             return
         }
-        let registerModule = RegisterRouter.createModule()
+        let registerModule = RegisterRouter.createModule(navigationController: navigationController, profileViewController: profileViewController)
         navigationController.pushViewController(registerModule, animated: true)
     }
     }
