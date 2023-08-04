@@ -11,4 +11,15 @@ struct Register: Codable {
     let username: String
     let email: String
     let password: String
+    let isAdmin: Bool
+    
+    
+    init(username: String, email: String, password: String) {
+        self.username = username
+        self.email = email
+        self.password = password
+        self.isAdmin = false
+    }
+    
+    
 }

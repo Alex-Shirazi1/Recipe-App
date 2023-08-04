@@ -8,11 +8,9 @@
 import Foundation
 import UIKit
 
-
-import UIKit
-
 protocol RegisterViewControllerProtocol: AnyObject {
-    
+    func navigateToLogin()
+    func showErrorAlert(error: Error)
 }
 
 class RegisterViewController: UIViewController, RegisterViewControllerProtocol {
@@ -34,7 +32,6 @@ class RegisterViewController: UIViewController, RegisterViewControllerProtocol {
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    
     
     private let passwordField: UITextField = {
         let textField = UITextField()
@@ -61,6 +58,7 @@ class RegisterViewController: UIViewController, RegisterViewControllerProtocol {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -90,14 +88,27 @@ class RegisterViewController: UIViewController, RegisterViewControllerProtocol {
             RegisterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+    
     @objc func didTapRegisterButton() {
-        guard let username = usernameField.text, let password = passwordField.text else {
+        guard let username = usernameField.text, let email = emailField.text, let password = passwordField.text else {
             print("Fields are empty.")
             return
         }
-        print("Username: \(username), Password: \(password)")
-        let registerDetails = Login(username: username, password: password)
+        
+        eventHandler.registerUser(username: username, email: email, password: password)
+    }
+    
+    func showErrorAlert(error: Error) {
+        let message = (error as? ValidationError)?.localizedDescription ?? error.localizedDescription
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
+    }
 
+
+    
+    func navigateToLogin() {
         eventHandler.navigateToLogin()
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C342DBA2A7CC023003713AF /* RegisterValidationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C342DB92A7CC023003713AF /* RegisterValidationFactory.swift */; };
 		5C3D1A852A65B5250053A10F /* RecipePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3D1A842A65B5250053A10F /* RecipePostCell.swift */; };
 		5C4AA6C32A7427E8002468CD /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6C22A7427E8002468CD /* CreatePostViewController.swift */; };
 		5C4AA6C52A7427F2002468CD /* CreatePostEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA6C42A7427F2002468CD /* CreatePostEventHandler.swift */; };
@@ -75,6 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C342DB92A7CC023003713AF /* RegisterValidationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterValidationFactory.swift; sourceTree = "<group>"; };
 		5C3D1A842A65B5250053A10F /* RecipePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePostCell.swift; sourceTree = "<group>"; };
 		5C4AA6C22A7427E8002468CD /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		5C4AA6C42A7427F2002468CD /* CreatePostEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostEventHandler.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				5C8B341E2A6B1D89007DE7C0 /* ImageFactory.swift */,
 				5C556B5D2A7726CF0094BE42 /* TableViewCellFactory.swift */,
 				5C8CB4232A7C468200FC32F7 /* TokenFactory.swift */,
+				5C342DB92A7CC023003713AF /* RegisterValidationFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				5C8B341F2A6B1D89007DE7C0 /* ImageFactory.swift in Sources */,
 				5C556B5A2A7721450094BE42 /* LoginRouter.swift in Sources */,
 				5C4AA6C92A742824002468CD /* CreatePostInteractor.swift in Sources */,
+				5C342DBA2A7CC023003713AF /* RegisterValidationFactory.swift in Sources */,
 				5CEDFB882A72F6F500114D27 /* FeedbackEventHandler.swift in Sources */,
 				5C556B4D2A77194A0094BE42 /* RegisterRouter.swift in Sources */,
 				5C8B341A2A6AFD8A007DE7C0 /* ListingDataManager.swift in Sources */,

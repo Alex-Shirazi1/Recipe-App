@@ -36,12 +36,14 @@ class RegisterRouter: RegisterRouterProtocol {
     }
     
     func navigateToLogin() {
-        navigationController.popViewController(animated: true)
-        profileViewController.eventHandler?.loginRoute(profileViewController: profileViewController)
-        guard let topVC = navigationController.viewControllers.last else {
-            return
-        }
+        DispatchQueue.main.async {
+            self.navigationController.popViewController(animated: true)
+            self.profileViewController.eventHandler?.loginRoute(profileViewController: self.profileViewController)
+            guard let topVC = self.navigationController.viewControllers.last else {
+                return
+            }
             let banner = BannerViewController(message: "Register Successful")
             banner.presentBanner(from: topVC, withDelay: true)
+        }
     }
 }

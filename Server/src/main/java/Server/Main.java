@@ -178,9 +178,9 @@ public class Main {
             Gson gson = new Gson();
             Map<String, Object> requestData = gson.fromJson(req.body(), Map.class);
 
-            String username = (String) requestData.get("username");
-            String email = (String) requestData.get("email");
-            String password = (String) requestData.get("password");
+            String username = requestData.get("username").toString().toLowerCase();
+            String email = requestData.get("email").toString().toLowerCase();
+            String password = requestData.get("password").toString().toLowerCase();
             Boolean isAdmin = (Boolean) requestData.get("isAdmin");
 
             // Check if the user already exists
@@ -244,7 +244,7 @@ public class Main {
             System.out.println("END");
             return "{\"message\": \"Admin request created successfully and has been send for review\"}";
         }
-
+        registrationRequest.append("approvedState", true);
         userCollection.insertOne(registrationRequest);
          return "{\"message\": \"User created successfully\"}";
         });
@@ -432,7 +432,6 @@ public class Main {
             return "{\"message\": \"Notifications deleted\"}";
         });
 
-
         get("/api/logout", (req, res)-> {
             Session session = req.session(false);
             if (session != null) {
@@ -440,5 +439,21 @@ public class Main {
             }
             return "{\"loggedOut\": true}";
         });
+        
+        //User Validation APIs
+        get("/api/emailExists/:email", (req, res) -> {
+            String email = req.params(":email").toLowerCase();
+            Document userDocument = userCollection.find(eq("email", email)).first();
+            boolean result = (userDocument != null);
+            return result ? "Email already exists" : "Email does not exist";
+        });
+
+        get("/api/usernameExists/:username", (req, res) -> {
+            String username = req.params(":username").toLowerCase();
+            Document userDocument = userCollection.find(eq("username", username)).first();
+            boolean result = (userDocument != null);
+            return result ? "Username already exists" : "Username does not exist";
+        });
+
     }
 }
