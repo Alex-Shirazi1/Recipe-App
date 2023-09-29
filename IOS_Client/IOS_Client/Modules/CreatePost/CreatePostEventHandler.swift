@@ -6,10 +6,12 @@
 //
 
 import Foundation
-
+import UIKit
 
 protocol CreatePostEventHandlerProtocol: AnyObject {
     var viewController: CreatePostViewControllerProtocol? { get set }
+    
+    func createPost(title: String, body: String, image: UIImage)
 }
 
 class CreatePostEventHandler: CreatePostEventHandlerProtocol {
@@ -22,5 +24,17 @@ class CreatePostEventHandler: CreatePostEventHandlerProtocol {
         self.interactor = interactor
         self.router = router
     }
+    
+    func createPost(title: String, body: String, image: UIImage) {
+        interactor.createPost(title: title, body: body, image: image) { result in
+            switch result {
+            case .success(let message):
+                print(message ?? "Post created!")
+            case .failure(let error):
+                print("Error creating post: \(error.localizedDescription)")
+            }
+        }
+    }
+
     
 }

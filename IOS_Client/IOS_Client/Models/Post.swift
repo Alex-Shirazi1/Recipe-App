@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 struct Post: Codable {
-    let _id: String
+    let _id: String?
     let username: String
     let title: String
     let body: String

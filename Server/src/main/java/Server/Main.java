@@ -65,6 +65,8 @@ public class Main {
 
         System.out.println("connected to db");
 
+
+
         post("/api/createPost", (req, res) -> {
             Session session = req.session(false);
             if (session == null) {
