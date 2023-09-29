@@ -14,52 +14,71 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
+
         let window = UIWindow(windowScene: windowScene)
         
+        let tabBarController = self.tabbar(controllers: [])
+        window.rootViewController = tabBarController
+        window.makeKeyAndVisible()
+        self.window = window
+
+        DispatchQueue.global(qos: .background).async {
+            self.prepareViewControllers { controllers in
+                DispatchQueue.main.async {
+                    tabBarController.viewControllers = controllers
+                }
+            }
+        }
+    }
+    
+    private func prepareViewControllers(completion: @escaping ([UIViewController]) -> Void) {
+        DispatchQueue.main.async {
+            let controllers = self.createViewControllers()
+            completion(controllers)
+        }
+    }
+    
+    private func createViewControllers() -> [UIViewController] {
+        
         // HomeModule Logic
+        
         let homeNavigationViewController = UINavigationController()
         let homeViewController = HomeRouter.createModule(navigationController: homeNavigationViewController)
         homeNavigationViewController.viewControllers = [homeViewController]
         homeNavigationViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
-        
+
         // Search Module Logic
         
         let searchNavigationController = UINavigationController()
         let searchViewController = SearchRouter.createModule(navigationController: searchNavigationController)
         searchNavigationController.viewControllers = [searchViewController]
         searchNavigationController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
-        
+
         // CreatePost Module Logic
         
         let createPostNavigationController = UINavigationController()
         let createPostViewController = CreatePostRouter.createModule(navigationController: createPostNavigationController)
         createPostNavigationController.viewControllers = [createPostViewController]
-        createPostNavigationController.tabBarItem = UITabBarItem(title: "create", image: UIImage(systemName: "plus"), tag: 2)
-        
+        createPostNavigationController.tabBarItem = UITabBarItem(title: "Create", image: UIImage(systemName: "plus"), tag: 2)
+
         // Profile Module Logic
         
         let profileNavigationController = UINavigationController()
         let profileViewController = ProfileRouter.createModule(navigationController: profileNavigationController)
         profileNavigationController.viewControllers = [profileViewController]
-        profileNavigationController.tabBarItem = UITabBarItem(title: "my profile", image: UIImage(systemName: "person"), tag: 3)
-        
+        profileNavigationController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 3)
+
         // Settings Module Logic
         
         let settingsNavigationController = UINavigationController()
         let settingsViewController = SettingsRouter.createModule(navigationController: settingsNavigationController)
         settingsNavigationController.viewControllers = [settingsViewController]
-        settingsNavigationController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "oilcan"), tag: 4)
+        settingsNavigationController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 4)
         
-        let tabBarController = tabbar(controllers: [homeNavigationViewController, searchNavigationController, createPostNavigationController, profileNavigationController, settingsNavigationController])
-       
-        window.rootViewController = tabBarController
-        window.makeKeyAndVisible()
-        
-        self.window = window
+        return [homeNavigationViewController, searchNavigationController, createPostNavigationController, profileNavigationController, settingsNavigationController]
     }
-    
-    func tabbar(controllers: [UIViewController]) -> UITabBarController {
+
+    private func tabbar(controllers: [UIViewController]) -> UITabBarController {
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = controllers
         tabBarController.tabBar.isTranslucent = false
@@ -94,7 +113,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-
