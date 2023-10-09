@@ -14,10 +14,38 @@ public class Setup {
         //mongo init
         MongoClient mongoClient = new MongoClient("localhost", 27017);
         MongoDatabase db = mongoClient.getDatabase("recipe-app");
+        MongoCollection<Document> userCollection = db.getCollection("users");
         MongoCollection<Document> service = db.getCollection("serviceCollection");
         System.out.println("connected to db");
 
-        // Check if service exists
+
+        //first we will start setup with a root user creation
+        Document existingRootUser = userCollection.find(new Document("isRoot", true)).first();
+
+        if (existingRootUser == null) {
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter root username:");
+            String rootUsername = scanner.nextLine();
+
+            System.out.println("Enter root password:");
+            String rootPassword = scanner.nextLine();
+
+
+            Document rootUser = new Document()
+                    .append("username", rootUsername)
+                    .append("password", rootPassword)
+                    .append("approvedState", true)
+                    .append("isRoot", true);
+
+            userCollection.insertOne(rootUser);
+
+            System.out.println("Root user setup complete.");
+        } else {
+            System.out.println("Root user already exists.");
+        }
+
+        // Check if email service exists
         Document existingService = service.find(new Document("service", "emailService")).first();
 
         if(existingService == null) {
