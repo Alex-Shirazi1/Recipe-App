@@ -83,7 +83,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>main</mainClass>
+                                    <mainClass>Server.Main</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
